@@ -1,4 +1,4 @@
-// Aroma Capital — piezas compartidas: encabezado, pie, concho, búsqueda y tarjetas.
+// Aroma Capital — piezas compartidas: encabezado, pie, carrito, búsqueda y tarjetas.
 const WA='18292324326';
 
 // Sección de cada marca. Lo que no está aquí es "Diseñador".
@@ -19,7 +19,7 @@ const img=c=>BY[c]&&BY[c][5]?`<img src="img/${c}.webp" alt="${esc(BY[c][1])}, ${
 const waLink=t=>`https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
 const cat=(q={})=>'catalogo.html'+(Object.keys(q).length?'?'+new URLSearchParams(q):'');
 
-const CARRO='<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h9l7 31h36" stroke-width="3.4"/><path d="M13.5 12H61l-5.5 19.5H18" stroke-width="3.4"/><path d="M15.2 19.5h43.7M16.9 26h40.2M25 12v19.5M33 12v19.5M41 12v19.5M49 12v19.5" stroke-width="2.4"/><circle cx="23" cy="42" r="3.4" stroke-width="3"/><circle cx="51" cy="42" r="3.4" stroke-width="3"/></g>';
+const CARRO='<g transform="translate(350,0) scale(-1,1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M292 5L247 7L196 138" stroke-width="11"/><path d="M58 46H233M60 46L72 130L196 138" stroke-width="11"/><path d="M88 46V132M113 46V133M138 46V135M163 46V136M188 46V137M64 74H222M68 102H211" stroke-width="7"/><path d="M196 138C204 158 224 162 228 182H66" stroke-width="10"/><circle cx="86" cy="198" r="9" stroke-width="6"/><circle cx="212" cy="198" r="9" stroke-width="6"/></g>';
 const WAICON='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>';
 const DIBUJO=`<svg class="dibujo" viewBox="0 0 620 360" role="img" aria-label="Dibujo de frascos de perfume">
 <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -83,7 +83,7 @@ function montarPiezas(activo){
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5.5 5.5"/></svg>
       <div class="results" id="results"></div>
     </div>
-    <button class="icon-btn" id="openCart" aria-label="Abrir tu concho"><svg viewBox="0 0 64 48" width="36" height="27" aria-hidden="true">${CARRO}</svg><span class="badge" id="badge" hidden>0</span><span class="t">Concho</span></button>
+    <button class="icon-btn" id="openCart" aria-label="Abrir tu carrito"><svg viewBox="50 -2 250 214" width="36" height="31" aria-hidden="true">${CARRO}</svg><span class="badge" id="badge" hidden>0</span><span class="t">Carrito</span></button>
   </div>
   <nav class="nav"><div class="wrap">${nav.map(([t,h,k])=>`<a href="${h}" class="${k==activo?'on':''}">${t}</a>`).join('')}</div></nav>
 </header>`);
@@ -93,14 +93,14 @@ function montarPiezas(activo){
     <h2>Pide tu perfume</h2>
     <p><b>Dónde estamos</b>Santo Domingo, República Dominicana</p>
     <p><b>Pedidos</b>Por WhatsApp al 829-232-4326</p>
-    <p><b>Cómo pedir</b>Monta en tu concho los perfumes que quieras y envíanos un solo mensaje.</p>
+    <p><b>Cómo pedir</b>Agrega a tu carrito los perfumes que quieras y envíanos un solo mensaje.</p>
     <a class="btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
   </div>
   ${DIBUJO}
 </div></section>
 <section class="perks"><div class="wrap">
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><div><b>Pedidos por WhatsApp</b><span>829-232-4326</span></div></div>
-  <div class="perk"><svg class="cart" viewBox="0 0 64 48" width="44" height="33" aria-hidden="true">${CARRO}</svg><div><b>Un solo mensaje</b><span>Todo tu concho de una vez</span></div></div>
+  <div class="perk"><svg class="cart" viewBox="50 -2 250 214" width="44" height="38" aria-hidden="true">${CARRO}</svg><div><b>Un solo mensaje</b><span>Todo tu carrito de una vez</span></div></div>
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="6" y="8" width="12" height="13" rx="2"/><path d="M9 8V5h6v3M10 3h4"/><path d="M9 14h6"/></svg><div><b>Ficha completa</b><span>Notas, acordes y opiniones</span></div></div>
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Santo Domingo</b><span>República Dominicana</span></div></div>
 </div></section>
@@ -110,7 +110,7 @@ function montarPiezas(activo){
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
     <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
-    <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi concho</a><a href="${waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
+    <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
     <div><h4>Aviso</h4><p>${AVISO}</p><button class="instalar btn ghost" hidden>Guardar en mi celular</button></div>
   </div>
   <div class="fbar">
@@ -119,11 +119,11 @@ function montarPiezas(activo){
   </div>
   <div class="legal">© 2026 Aroma Capital · ${AVISO}</div>
 </div></footer>
-<button class="fab" id="fab" data-open-cart aria-label="Abrir tu concho"><svg viewBox="0 0 64 48" width="34" height="26" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
+<button class="fab" id="fab" data-open-cart aria-label="Abrir tu carrito"><svg viewBox="50 -2 250 214" width="36" height="31" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
 <div class="veil" id="veil"></div>
-<aside class="drawer" id="drawer" aria-label="Tu concho">
-  <div class="dh"><h3>Tu concho</h3><button class="x" id="closeCart" aria-label="Cerrar">✕</button></div>
-  <p class="dnote">La fragancia que quieras, móntala en tu concho.</p>
+<aside class="drawer" id="drawer" aria-label="Tu carrito">
+  <div class="dh"><h3>Tu carrito</h3><button class="x" id="closeCart" aria-label="Cerrar">✕</button></div>
+  <p class="dnote">La fragancia que quieras, agrégala a tu carrito.</p>
   <div class="dlist" id="dlist"></div><div class="dfoot" id="dfoot"></div>
 </aside>
 <div class="toast" id="toast"></div>`);
@@ -140,7 +140,7 @@ function montarPiezas(activo){
     box.classList.add('on');pintarConcho();
   });
 
-  // Concho
+  // Carrito
   document.addEventListener('click',e=>{
     if(!e.target.closest('.search'))$('#results').classList.remove('on');
     const f=e.target.closest('a[href^="ficha.html"]');
@@ -152,7 +152,7 @@ function montarPiezas(activo){
   });
   $('#closeCart').onclick=$('#veil').onclick=()=>abrir(false);
   addEventListener('keydown',e=>{if(e.key=='Escape')abrir(false)});
-  // El concho flotante aparece al bajar la pantalla
+  // El carrito flotante aparece al bajar la pantalla
   const verFab=()=>$('#fab').classList.toggle('on',scrollY>300);
   addEventListener('scroll',verFab,{passive:true});verFab();
   pintarConcho();
@@ -163,17 +163,17 @@ const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart))}ca
 const abrir=on=>{$('#drawer').classList.toggle('on',on);$('#veil').classList.toggle('on',on)};
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
 function toggle(c){
-  if(cart.includes(c)){cart=cart.filter(x=>x!=c);toast('Lo bajaste del concho')}
-  else{cart.push(c);toast(`${BY[c][1]} va en tu concho`)}
+  if(cart.includes(c)){cart=cart.filter(x=>x!=c);toast('Lo quitaste del carrito')}
+  else{cart.push(c);toast(`${BY[c][1]} se agregó a tu carrito`)}
   guardar();pintarConcho();
 }
 function pintarConcho(){
   [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=cart.length});
-  $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu concho'):(m.dataset.off||'Montar')});
+  $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito'):(m.dataset.off||'Agregar')});
   $('#dlist').innerHTML=cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
-    :'<p class="dnote">Tu concho está vacío. Toca <b>Montar</b> en los perfumes que te gusten.</p>';
+    :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>';
   const msg=`Hola, quiero consultar por estos perfumes de Aroma Capital:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}\n¿Están disponibles y qué precio tienen?`;
-  $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar concho</button>`:'';
+  $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 
 // Guardar la página en el celular y abrirla sin internet.

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#1a1814">
-<meta name="description" content="Perfumes inspirados en Santo Domingo. Mira las fichas, monta tus favoritos en el concho y pide por WhatsApp.">
+<meta name="description" content="Perfumes inspirados en Santo Domingo. Mira las fichas, agrega tus favoritos al carrito y pide por WhatsApp.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <title>Ficha · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=10">
+<link rel="stylesheet" href="estilo.css?v=11">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -104,9 +104,9 @@
   <section class="more" id="more"></section>
 </main>
 
-<script src="datos.js?v=10"></script>
-<script src="fichas.js?v=10"></script>
-<script src="comun.js?v=10"></script>
+<script src="datos.js?v=11"></script>
+<script src="fichas.js?v=11"></script>
+<script src="comun.js?v=11"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -149,7 +149,7 @@ if(d&&d.notes){
 }
 if(d&&d.rating)html+=`<section class="block"><div class="panels"><div class="vpanel"><span class="label">Qué opina la gente</span>${bars(d.rating)}</div><div class="vpanel"><span class="label">Cuándo usarlo</span>${bars(d.when)}</div></div><p class="src">Opiniones de referencia sobre la fragancia original.</p></section>`;
 if(!d)html+=`<div class="pending">Pronto agregamos la descripción y las notas de este perfume.</div>`;
-html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Montar en mi concho" data-on="Ya va en tu concho ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a></div></div>
+html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Agregar a mi carrito" data-on="Ya está en tu carrito ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a></div></div>
 <p class="src" style="margin-top:22px">${AVISO}</p>`;
 $('#ficha').innerHTML=html;
 
