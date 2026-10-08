@@ -106,8 +106,7 @@ function montarPiezas(activo){
 </div></section>
 <footer><div class="wrap">
   <div class="fcols">
-    <div><a class="logo" href="index.html"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small></span></a>
-      <p class="firma">By Anggelo Berdejo</p>
+    <div><a class="logo" href="index.html" style="margin-bottom:16px"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
     <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
@@ -118,7 +117,7 @@ function montarPiezas(activo){
     <div><h4>Aceptamos</h4><div class="pagos">${PAGOS}</div></div>
     <div><h4>Síguenos</h4><div class="redes">${REDES.map(([n,h,ic])=>`<a href="${h}" aria-label="${n}" title="${n}"${h!='#'?' target="_blank" rel="noopener"':''}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${ic}</svg></a>`).join('')}<a href="${waLink('Hola Aroma Capital')}" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">${WAICON.replace('width="18" height="18"','width="22" height="22"')}</a></div></div>
   </div>
-  <div class="legal">© 2026 Aroma Capital · ${AVISO}</div>
+  <div class="legal">© 2026 Aroma Capital · By Anggelo Berdejo</div>
 </div></footer>
 <button class="fab" id="fab" data-open-cart aria-label="Abrir tu carrito"><svg viewBox="50 -2 250 214" width="36" height="31" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
 <div class="veil" id="veil"></div>
