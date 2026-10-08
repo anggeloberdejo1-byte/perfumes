@@ -63,6 +63,12 @@ const ficha=c=>'ficha.html?c='+encodeURIComponent(c);
 function ink(h){const n=parseInt(h.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (0.299*r+0.587*g+0.114*b)>165?'#333':'#fff'}
 const acordes=(c,n)=>(ACORDES[c]||[]).slice(0,n).map(([l,w,col])=>`<div style="width:${w}%;background:${col};color:${ink(col)}">${esc(l)}</div>`).join('');
 
+// Parecido entre dos perfumes según los acordes del PDF (nombres y largos de barra; el primer acorde pesa más).
+const vecAcordes=k=>{const v={};(ACORDES[k]||[]).forEach(([l,w],j)=>v[l]=w*(j==0?1.5:1));return v};
+function similitud(a,b){const x=vecAcordes(a),y=vecAcordes(b);let d=0,na=0,nb=0;for(const l in x){na+=x[l]**2;if(y[l])d+=x[l]*y[l]}for(const l in y)nb+=y[l]**2;return na&&nb?d/Math.sqrt(na*nb):0}
+// Los n perfumes más parecidos a c (por defecto, del mismo género).
+function masParecidos(c,n,mismoGenero=true){const g=BY[c][3];return PERFUMES.filter(x=>x[0]!=c&&(!mismoGenero||x[3]==g)).map(x=>[x[0],similitud(c,x[0])]).sort((a,b)=>b[1]-a[1]).slice(0,n)}
+
 function card(c){
   const p=BY[c];if(!p)return'';
   const sec=SECCIONES.find(s=>s.id==p[6]).nombre;
@@ -73,7 +79,7 @@ function card(c){
 }
 
 function montarPiezas(activo){
-  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Cómo pedir','index.html#como','como']];
+  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Cómo pedir','index.html#como','como'],['Comparar','comparar.html','comparar']];
   document.body.insertAdjacentHTML('afterbegin',`
 <header class="top">
   <div class="wrap">
@@ -109,7 +115,7 @@ function montarPiezas(activo){
     <div><a class="logo" href="index.html" style="margin-bottom:18px"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small><i class="firma">By Anggelo Berdejo</i></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
-    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
+    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a><a href="comparar.html">Comparar fragancias</a></div>
     <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
     <div><h4>Aviso</h4><p>${AVISO}</p><button class="instalar btn ghost" hidden>Guardar en mi celular</button></div>
   </div>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1a1814">
+<meta name="description" content="Compara dos fragancias lado a lado: acordes, notas y lo que opina la gente.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aroma Capital">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Comparar fragancias · Aroma Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="estilo.css?v=19">
+<style>
+.crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
+.crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
+.head{background:var(--tint);border:1px solid var(--line);padding:30px 36px}
+.head h1{font-family:var(--display);font-weight:500;font-size:56px;line-height:1;margin:0}
+.head p{margin:10px 0 0;color:var(--muted);max-width:60ch}
+.label{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:400}
+
+/* Los dos lugares para elegir */
+.slots{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:18px;align-items:stretch;margin-top:26px}
+.vs{align-self:center;font-family:var(--display);font-style:italic;font-size:30px;color:var(--accent)}
+.slot{border:1px solid var(--line);padding:18px;position:relative;min-height:150px}
+.slot .label{display:block;margin-bottom:10px}
+.pick{position:relative}
+.pick input{width:100%;height:44px;border:1px solid var(--line);padding:0 14px;font:inherit;font-size:15px;color:var(--ink);background:#fff}
+.pick input:focus{outline:none;border-color:var(--ink)}
+.opts{position:absolute;left:0;right:0;top:46px;background:#fff;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.14);max-height:340px;overflow:auto;z-index:15;display:none}
+.opts.on{display:block}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;display:flex;gap:12px;align-items:center;width:100%;padding:8px 12px;border-bottom:1px solid var(--line)}
+.opt:hover,.opt:focus-visible{background:var(--tint)}
+.opt .th{width:36px;height:44px;display:grid;place-items:center;flex:none}.opt .th img{max-height:44px;max-width:36px}
+.opt b{display:block;font-family:var(--display);font-size:18px;font-weight:500;line-height:1.1}
+.opt span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.opt .vacio{padding:12px;color:var(--muted)}
+.elegido{display:flex;gap:16px;align-items:center}
+.elegido .im{width:90px;height:110px;flex:none;display:grid;place-items:center}
+.elegido .im img{max-width:90px;max-height:110px}
+.elegido .nm{font-family:var(--display);font-size:26px;font-weight:500;line-height:1.05}
+.elegido .mk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.elegido .tags{justify-content:flex-start;margin:10px 0 0}
+.quitar{all:unset;cursor:pointer;position:absolute;top:10px;right:12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:underline}
+
+/* Sugerencias */
+.sug{margin-top:34px}
+.sug h2{font-family:var(--display);font-weight:500;font-size:32px;margin:0}
+.sug p{margin:4px 0 0;color:var(--muted)}
+.sgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:16px}
+.sc{all:unset;box-sizing:border-box;cursor:pointer;background:#fff;padding:16px 10px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.sc:hover{background:var(--tint)}
+.sc .im{height:120px;display:grid;place-items:center}.sc .im img{max-height:120px;max-width:100%}
+.sc b{font-family:var(--display);font-size:18px;font-weight:500;line-height:1.1;margin-top:10px}
+.sc span{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.sc i{font-style:normal;font-size:12px;color:var(--accent);margin-top:8px}
+.sc em{font-style:normal;font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;border:1px solid var(--ink);padding:6px 10px;margin-top:10px}
+
+/* Comparación lado a lado */
+.resumen{margin-top:34px;background:var(--ink);color:var(--on-ink);padding:22px 26px;display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.resumen .pct{font-family:var(--display);font-size:54px;line-height:1;color:var(--accent-soft)}
+.resumen p{margin:0;max-width:62ch}
+.resumen{scroll-margin-top:150px}
+.resumen b{font-weight:500}
+.fila{margin-top:34px}
+.fila>.label{display:block;color:var(--ink);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.dos{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.col-t{font-family:var(--display);font-size:20px;font-weight:500;margin:0 0 10px}
+.acc{display:flex;flex-direction:column;max-width:420px}
+.acc div{height:29px;display:flex;align-items:center;justify-content:center;font-size:13.5px;font-weight:400;border-radius:0 8px 8px 0;min-width:96px;white-space:nowrap;position:relative}
+.acc div.comun::after{content:"";position:absolute;right:-12px;width:6px;height:6px;border-radius:50%;background:var(--ink)}
+.leyenda{font-size:12px;color:var(--muted);margin:10px 0 0}
+.leyenda i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ink);margin:0 6px 1px 0;vertical-align:middle}
+.notas h4{font-family:var(--display);font-size:19px;font-weight:500;margin:10px 0 2px}
+.notas p{margin:0;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.bar{display:grid;grid-template-columns:92px 1fr;gap:10px;align-items:center}
+.bar span{font-size:14px}
+.trk{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.fill{height:100%;border-radius:4px}
+.sin{color:var(--muted);font-size:14px}
+.acciones{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.acciones .montar{padding:10px 14px;font-size:11px}
+.acciones a{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;color:var(--ink);text-decoration:underline;text-underline-offset:4px;align-self:center}
+.src{font-size:12px;color:var(--muted);margin-top:12px}
+
+@media (max-width:900px){.sgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){
+  .head{padding:22px 18px}.head h1{font-size:40px}
+  .slots{grid-template-columns:minmax(0,1fr);gap:10px}
+  .vs{justify-self:center;font-size:24px}
+  .dos{gap:14px}
+  .col-t{font-size:17px}
+  .acc div{height:26px;font-size:12px;min-width:0}
+  .acc div.comun::after{right:-9px;width:5px;height:5px}
+  .bar{grid-template-columns:1fr;gap:3px}
+  .bar span{font-size:12px}
+  .elegido .im{width:70px;height:90px}.elegido .im img{max-width:70px;max-height:90px}
+  .elegido .nm{font-size:22px}
+  .resumen{padding:18px}.resumen .pct{font-size:42px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumbs"><a href="index.html">Inicio</a> / Comparar</div>
+  <section class="head">
+    <p class="kick">Comparar</p>
+    <h1>Compara fragancias</h1>
+    <p>Elige un perfume y te sugerimos con cuáles compararlo según sus acordes. Míralos lado a lado: acordes, notas y lo que opina la gente.</p>
+  </section>
+
+  <section class="slots">
+    <div class="slot" id="slotA"></div>
+    <div class="vs" aria-hidden="true">vs</div>
+    <div class="slot" id="slotB"></div>
+  </section>
+
+  <section class="sug" id="sug"></section>
+  <section id="comp"></section>
+</main>
+
+<script src="datos.js?v=19"></script>
+<script src="fichas.js?v=19"></script>
+<script src="comun.js?v=19"></script>
+<script>
+montarPiezas('comparar');
+const qs=new URLSearchParams(location.search);
+const st={a:BY[qs.get('a')]?qs.get('a'):'',b:BY[qs.get('b')]?qs.get('b'):''};
+if(st.a==st.b)st.b='';
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const pct=x=>Math.round(x*100)+'%';
+const gen=c=>BY[c][3]=='H'?'Hombre':'Mujer';
+const thumb=c=>img(c)||'<span class="nofoto" style="width:40px;height:40px;font-size:10px">Pronto</span>';
+
+function picker(slot,lugar){
+  const otro=slot=='a'?st.b:st.a;
+  return `<span class="label">${lugar}</span><div class="pick"><input type="search" data-slot="${slot}" placeholder="Busca por nombre o marca" autocomplete="off" aria-label="${lugar}: busca un perfume"><div class="opts" id="opts-${slot}"></div></div>
+    <p class="sin" style="margin:10px 0 0">${otro?'O elige uno de los sugeridos de abajo.':'Escribe al menos 2 letras.'}</p>`;
+}
+function elegido(slot,c,lugar){
+  const p=BY[c],sec=SECCIONES.find(s=>s.id==p[6]).nombre;
+  return `<span class="label">${lugar}</span><button class="quitar" data-quitar="${slot}">Cambiar</button>
+    <div class="elegido"><div class="im">${img(c)||'<span class="nofoto">Foto pronto</span>'}</div>
+    <div><div class="nm">${esc(p[1])}</div><div class="mk">${esc(p[2])}</div>
+    <div class="tags"><span class="tag ${p[3]=='H'?'h':'m'}">${gen(c)}</span><span class="tag f">${esc(p[4])}</span><span class="tag f">${sec}</span></div></div></div>`;
+}
+function opciones(slot,q){
+  const box=$('#opts-'+slot);if(!box)return;
+  q=norm(q.trim());
+  if(q.length<2){box.classList.remove('on');return}
+  const otro=slot=='a'?st.b:st.a;
+  const hits=PERFUMES.filter(p=>p[0]!=otro&&norm(p[1]+' '+p[2]).includes(q)).slice(0,25);
+  box.innerHTML=hits.length?hits.map(p=>`<button class="opt" data-elegir="${slot}" data-c="${p[0]}"><span class="th">${thumb(p[0])}</span><span><b>${esc(p[1])}</b><span>${esc(p[2])} · ${gen(p[0])}</span></span></button>`).join(''):'<div class="vacio">No lo encontramos.</div>';
+  box.classList.add('on');
+}
+
+const barras=rows=>{const max=Math.max(...rows.map(r=>r[1]));return `<div class="bars">${rows.map(([l,v,col])=>`<div class="bar"><span>${l}</span><div class="trk"><div class="fill" style="width:${Math.max(3,v/max*100)}%;background:${col}"></div></div></div>`).join('')}</div>`};
+function columnaAcordes(c,comunes){
+  return `<div class="acc">${(ACORDES[c]||[]).map(([l,w,col])=>`<div class="${comunes.has(l)?'comun':''}" style="width:${w}%;background:${col};color:${ink(col)}">${esc(l)}</div>`).join('')}</div>`;
+}
+function notas(c){
+  const n=(FICHAS[c]||{}).notes;
+  if(!n)return '<p class="sin">Sin notas todavía.</p>';
+  return `<div class="notas">${n.todas?`<h4>Notas principales</h4><p>${esc(n.todas)}</p>`:`<h4>Salida</h4><p>${esc(n.salida)}</p><h4>Corazón</h4><p>${esc(n.corazon)}</p><h4>Fondo</h4><p>${esc(n.fondo)}</p>`}</div>`;
+}
+const votos=(c,k)=>{const f=FICHAS[c]||{};return f[k]?barras(f[k]):'<p class="sin">Sin suficientes opiniones.</p>'};
+
+function comparar(){
+  const a=st.a,b=st.b,A=BY[a],B=BY[b];
+  const na=new Set((ACORDES[a]||[]).map(x=>x[0])),nb=new Set((ACORDES[b]||[]).map(x=>x[0]));
+  const comunes=new Set([...na].filter(l=>nb.has(l)));
+  const lista=[...comunes];
+  const s=similitud(a,b);
+  const frase=s>=.8?'Son muy parecidos.':s>=.6?'Se parecen bastante.':s>=.4?'Tienen cosas en común, pero se sienten distintos.':'Son bastante diferentes.';
+  const dosCol=(f)=>`<div class="dos"><div><p class="col-t">${esc(A[1])}</p>${f(a)}</div><div><p class="col-t">${esc(B[1])}</p>${f(b)}</div></div>`;
+  return `<div class="resumen"><div class="pct">${pct(s)}</div><p><b>${frase}</b> ${lista.length?`Comparten ${lista.length} acorde${lista.length>1?'s':''}: ${esc(lista.map(x=>x.toLowerCase()).join(', '))}.`:'No comparten acordes.'}</p></div>
+  <section class="fila"><span class="label">Acordes principales</span>${dosCol(c=>columnaAcordes(c,comunes))}<p class="leyenda"><i></i>Acorde que tienen los dos</p></section>
+  <section class="fila"><span class="label">Pirámide olfativa</span>${dosCol(notas)}</section>
+  <section class="fila"><span class="label">Qué opina la gente</span>${dosCol(c=>votos(c,'rating'))}</section>
+  <section class="fila"><span class="label">Cuándo usarlo</span>${dosCol(c=>votos(c,'when'))}<p class="src">Opiniones de referencia sobre la fragancia original.</p></section>
+  <section class="fila"><span class="label">¿Cuál te llevas?</span>${dosCol(c=>`<div class="acciones"><button class="montar" data-code="${c}"></button><a href="${ficha(c)}">Ver ficha</a></div>`)}</section>`;
+}
+
+function sugerencias(){
+  const base=st.a||st.b;
+  if(!base){
+    const fav=['EM56','EM38','EM77','E110','E50','E86'].filter(k=>BY[k]);
+    return `<h2>¿No sabes por dónde empezar?</h2><p>Elige uno de los favoritos y te mostramos con cuáles compararlo.</p>
+      <div class="sgrid">${fav.map(k=>tarjeta(k,'a','Elegir')).join('')}</div>`;
+  }
+  const libre=st.a?'b':'a';
+  const otros=masParecidos(base,6);
+  return `<h2>${st.a&&st.b?'Compara con otro':'Para comparar con '+esc(BY[base][1])}</h2><p>Los de acordes más parecidos a ${esc(BY[base][1])}.</p>
+    <div class="sgrid">${otros.map(([k,v])=>tarjeta(k,libre,'Comparar',v)).join('')}</div>`;
+}
+function tarjeta(k,slot,accion,v){
+  const p=BY[k];
+  return `<button class="sc" data-elegir="${slot}" data-c="${k}"><span class="im">${img(k)||'<span class="nofoto">Foto pronto</span>'}</span><b>${esc(p[1])}</b><span>${esc(p[2])}</span>${v!=null?`<i>${pct(v)} parecido</i>`:''}<em>${accion}</em></button>`;
+}
+
+function pintar(){
+  const q={};if(st.a)q.a=st.a;if(st.b)q.b=st.b;
+  history.replaceState(null,'','comparar.html'+(Object.keys(q).length?'?'+new URLSearchParams(q):''));
+  $('#slotA').innerHTML=st.a?elegido('a',st.a,'Perfume 1'):picker('a','Perfume 1');
+  $('#slotB').innerHTML=st.b?elegido('b',st.b,'Perfume 2'):picker('b','Perfume 2');
+  $('#sug').innerHTML=sugerencias();
+  $('#comp').innerHTML=st.a&&st.b?comparar():'';
+  document.title=st.a&&st.b?`${BY[st.a][1]} vs ${BY[st.b][1]} · Aroma Capital`:'Comparar fragancias · Aroma Capital';
+  pintarConcho();
+}
+document.addEventListener('input',e=>{const i=e.target.closest('.pick input');if(i)opciones(i.dataset.slot,i.value)});
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-elegir]');
+  if(el){const slot=el.dataset.elegir,c=el.dataset.c;st[slot]=c;if(st.a==st.b)st[slot=='a'?'b':'a']='';pintar();
+    if(st.a&&st.b)document.querySelector('.resumen').scrollIntoView({behavior:'smooth',block:'start'});return}
+  const q=e.target.closest('[data-quitar]');
+  if(q){st[q.dataset.quitar]='';pintar();const i=document.querySelector(`.pick input[data-slot="${q.dataset.quitar}"]`);if(i)i.focus();return}
+  if(!e.target.closest('.pick'))$$('.opts').forEach(o=>o.classList.remove('on'));
+});
+pintar();
+</script>
+</body>
+</html>

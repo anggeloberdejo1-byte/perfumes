@@ -15,7 +15,7 @@
 <title>Ficha · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=18">
+<link rel="stylesheet" href="estilo.css?v=19">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -74,6 +74,8 @@
 .cta p{margin:0;font-family:var(--display);font-size:28px}
 .cta .acts{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .cta .montar{border-color:var(--on-ink);color:var(--on-ink);padding:11px 18px;font-size:13px}
+.cta .comparar-btn{background:transparent;border:1px solid var(--on-ink);color:var(--on-ink);padding:11px 18px;font-size:13px}
+.cta .comparar-btn:hover{background:var(--on-ink);color:var(--ink)}
 .cta .montar:hover,.cta .montar.on{background:var(--on-ink);color:var(--ink)}
 
 .more{margin-top:56px}
@@ -104,9 +106,9 @@
   <section class="more" id="more"></section>
 </main>
 
-<script src="datos.js?v=18"></script>
-<script src="fichas.js?v=18"></script>
-<script src="comun.js?v=18"></script>
+<script src="datos.js?v=19"></script>
+<script src="fichas.js?v=19"></script>
+<script src="comun.js?v=19"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -149,16 +151,13 @@ if(d&&d.notes){
 }
 if(d&&d.rating)html+=`<section class="block"><div class="panels"><div class="vpanel"><span class="label">Qué opina la gente</span>${bars(d.rating)}</div><div class="vpanel"><span class="label">Cuándo usarlo</span>${bars(d.when)}</div></div><p class="src">Opiniones de referencia sobre la fragancia original.</p></section>`;
 if(!d)html+=`<div class="pending">Pronto agregamos la descripción y las notas de este perfume.</div>`;
-html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Agregar a mi carrito" data-on="Ya está en tu carrito ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a></div></div>
+html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Agregar a mi carrito" data-on="Ya está en tu carrito ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a><a class="btn comparar-btn" href="comparar.html?a=${encodeURIComponent(c)}">Comparar</a></div></div>
 <p class="src" style="margin-top:22px">${AVISO}</p>`;
 $('#ficha').innerHTML=html;
 
 // Recomendados: los del mismo género con los acordes del PDF más parecidos
 // (se comparan nombres y largos de barra; el primer acorde pesa más).
-const vec=k=>{const v={};(ACORDES[k]||[]).forEach(([l,w],j)=>v[l]=w*(j==0?1.5:1));return v};
-const parecido=(a,b)=>{let d=0,na=0,nb=0;for(const l in a){na+=a[l]**2;if(b[l])d+=a[l]*b[l]}for(const l in b)nb+=b[l]**2;return na&&nb?d/Math.sqrt(na*nb):0};
-const yo=vec(c);
-const elegidos=PERFUMES.filter(x=>x[3]==genero&&x[0]!=c).map(x=>[x,parecido(yo,vec(x[0]))]).sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]);
+const elegidos=masParecidos(c,4).map(([k])=>BY[k]);
 const principales=(ACORDES[c]||[]).slice(0,2).map(a=>a[0].toLowerCase()).join(' y ');
 if(elegidos.length)$('#more').innerHTML=`<h2>También te puede gustar</h2><p class="label">Con acordes parecidos${principales?': '+esc(principales):''}</p><div class="grid">${elegidos.map(x=>card(x[0])).join('')}</div>`;
 pintarConcho();
