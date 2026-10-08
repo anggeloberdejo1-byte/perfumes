@@ -17,12 +17,16 @@ self.addEventListener('install', e => {
     // Lo esencial tiene que quedar guardado; si falla, se reintenta en la próxima visita.
     // cache: 'reload' evita que se guarde una copia vieja que el navegador tenía en memoria.
     await (await caches.open(BASE)).addAll(PAGINAS.map(u => new Request(u, { cache: 'reload' })));
-    // Las fotos se guardan de a 20; si alguna falla, no bloquea la instalación.
+    // Las fotos se guardan de a 20; si alguna falla, se reintenta una vez y no bloquea la instalación.
+    // Las que aun así falten se guardan solas la primera vez que se vean.
     try {
       const lista = await (await fetch('archivos.json', { cache: 'no-store' })).json();
       const cache = await caches.open(FOTOS);
       for (let i = 0; i < lista.fotos.length; i += 20) {
-        await Promise.all(lista.fotos.slice(i, i + 20).map(f => cache.add(new Request(f, { cache: 'reload' })).catch(() => {})));
+        await Promise.all(lista.fotos.slice(i, i + 20).map(f => {
+          const guardar = () => cache.add(new Request(f, { cache: 'reload' }));
+          return guardar().catch(guardar).catch(() => {}); // un reintento si falla
+        }));
       }
     } catch (_) {}
     self.skipWaiting();
