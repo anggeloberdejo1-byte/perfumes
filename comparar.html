@@ -15,7 +15,7 @@
 <title>Comparar fragancias · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=19">
+<link rel="stylesheet" href="estilo.css?v=20">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -49,6 +49,9 @@
 .quitar{all:unset;cursor:pointer;position:absolute;top:10px;right:12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:underline}
 
 /* Sugerencias */
+.ir{text-align:center;margin-top:22px}
+.ir .btn{font-size:15px;padding:16px 46px}
+.ir p{margin:8px 0 0;color:var(--muted);font-size:14px}
 .sug{margin-top:34px}
 .sug h2{font-family:var(--display);font-weight:500;font-size:32px;margin:0}
 .sug p{margin:4px 0 0;color:var(--muted)}
@@ -121,17 +124,19 @@
     <div class="slot" id="slotB"></div>
   </section>
 
+  <div class="ir" id="ir"></div>
   <section class="sug" id="sug"></section>
   <section id="comp"></section>
 </main>
 
-<script src="datos.js?v=19"></script>
-<script src="fichas.js?v=19"></script>
-<script src="comun.js?v=19"></script>
+<script src="datos.js?v=20"></script>
+<script src="fichas.js?v=20"></script>
+<script src="comun.js?v=20"></script>
 <script>
 montarPiezas('comparar');
 const qs=new URLSearchParams(location.search);
 const st={a:BY[qs.get('a')]?qs.get('a'):'',b:BY[qs.get('b')]?qs.get('b'):''};
+let ver=!!(st.a&&st.b); // con un enlace a ya armado, se muestra la comparación directo
 if(st.a==st.b)st.b='';
 const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const pct=x=>Math.round(x*100)+'%';
@@ -210,17 +215,19 @@ function pintar(){
   $('#slotA').innerHTML=st.a?elegido('a',st.a,'Perfume 1'):picker('a','Perfume 1');
   $('#slotB').innerHTML=st.b?elegido('b',st.b,'Perfume 2'):picker('b','Perfume 2');
   $('#sug').innerHTML=sugerencias();
-  $('#comp').innerHTML=st.a&&st.b?comparar():'';
+  $('#ir').innerHTML=st.a&&st.b?`<button class="btn" id="irBtn">${ver?'Ver comparación ↓':'Comparar'}</button>`:(st.a||st.b?'<p>Elige el otro perfume para compararlos.</p>':'');
+  $('#comp').innerHTML=st.a&&st.b&&ver?comparar():'';
   document.title=st.a&&st.b?`${BY[st.a][1]} vs ${BY[st.b][1]} · Aroma Capital`:'Comparar fragancias · Aroma Capital';
   pintarConcho();
 }
 document.addEventListener('input',e=>{const i=e.target.closest('.pick input');if(i)opciones(i.dataset.slot,i.value)});
 document.addEventListener('click',e=>{
   const el=e.target.closest('[data-elegir]');
-  if(el){const slot=el.dataset.elegir,c=el.dataset.c;st[slot]=c;if(st.a==st.b)st[slot=='a'?'b':'a']='';pintar();
-    if(st.a&&st.b)document.querySelector('.resumen').scrollIntoView({behavior:'smooth',block:'start'});return}
+  if(el){const slot=el.dataset.elegir,c=el.dataset.c;st[slot]=c;if(st.a==st.b)st[slot=='a'?'b':'a']='';ver=false;pintar();
+    if(st.a&&st.b)$('#ir').scrollIntoView({behavior:'smooth',block:'center'});return}
+  if(e.target.closest('#irBtn')){ver=true;pintar();document.querySelector('.resumen').scrollIntoView({behavior:'smooth',block:'start'});return}
   const q=e.target.closest('[data-quitar]');
-  if(q){st[q.dataset.quitar]='';pintar();const i=document.querySelector(`.pick input[data-slot="${q.dataset.quitar}"]`);if(i)i.focus();return}
+  if(q){st[q.dataset.quitar]='';ver=false;pintar();const i=document.querySelector(`.pick input[data-slot="${q.dataset.quitar}"]`);if(i)i.focus();return}
   if(!e.target.closest('.pick'))$$('.opts').forEach(o=>o.classList.remove('on'));
 });
 pintar();

@@ -1,6 +1,6 @@
 // Aroma Capital — service worker: guarda la página y las fotos para abrirla sin internet.
 // preparar.py cambia VERSION cada vez que cambian los archivos, así el celular baja lo nuevo.
-const VERSION = '7053f9cda6';
+const VERSION = '5140280dae';
 const BASE = 'aroma-base-' + VERSION;
 const FOTOS = 'aroma-fotos-' + VERSION;
 const FUENTES = 'aroma-fuentes';
@@ -66,18 +66,18 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  // Páginas y datos: se muestra lo guardado al instante y se actualiza por detrás.
-  // ficha.html?c=E3 y catalogo.html?g=M usan la misma página guardada.
+  // Páginas y datos: con internet siempre se baja lo más nuevo (y se guarda);
+  // sin internet se usa lo guardado. ficha.html?c=E3 y catalogo.html?g=M usan la misma página guardada.
   e.respondWith((async () => {
-    const hit = await caches.match(req, { ignoreSearch: true });
-    const red = fetch(req).then(async r => {
+    try {
+      const r = await fetch(req, { cache: 'no-cache' });
       if (r.ok) {
-        const c = await caches.open(BASE);
-        await c.put(new Request(url.origin + url.pathname), r.clone());
+        const copia = r.clone();
+        e.waitUntil(caches.open(BASE).then(c => c.put(new Request(url.origin + url.pathname), copia)));
       }
       return r;
-    }).catch(() => null);
-    if (hit) { e.waitUntil(red); return hit; }
-    return (await red) || (await caches.match('index.html')) || Response.error();
+    } catch (_) {
+      return (await caches.match(req, { ignoreSearch: true })) || (await caches.match('index.html')) || Response.error();
+    }
   })());
 });

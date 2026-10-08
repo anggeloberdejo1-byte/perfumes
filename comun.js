@@ -184,6 +184,8 @@ function pintarConcho(){
 
 // Guardar la página en el celular y abrirla sin internet.
 if('serviceWorker' in navigator&&location.protocol!='file:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+// Cuando llega una versión nueva de la página, recargar una vez para mostrarla (no en la primera visita).
+if('serviceWorker' in navigator&&navigator.serviceWorker.controller){let recargada=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!recargada){recargada=true;location.reload()}})}
 let pedirInstalar=null;
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();pedirInstalar=e;$$('.instalar').forEach(b=>b.hidden=false)});
 document.addEventListener('click',async e=>{
