@@ -216,7 +216,7 @@ function pintar(){
   $('#slotA').innerHTML=st.a?elegido('a',st.a,'Perfume 1'):picker('a','Perfume 1');
   $('#slotB').innerHTML=st.b?elegido('b',st.b,'Perfume 2'):picker('b','Perfume 2');
   $('#sug').innerHTML=sugerencias();
-  $('#ir').innerHTML=st.a&&st.b?`<button class="btn" id="irBtn">${ver?'Ver comparación ↓':'Comparar'}</button>`:(st.a||st.b?'<p>Elige el otro perfume para compararlos.</p>':'');
+  $('#ir').innerHTML=st.a&&st.b?(ver?'':'<button class="btn" id="irBtn">Comparar</button>'):(st.a||st.b?'<p>Elige el otro perfume para compararlos.</p>':'');
   $('#comp').innerHTML=st.a&&st.b&&ver?comparar():'';
   document.title=st.a&&st.b?`${BY[st.a][1]} vs ${BY[st.b][1]} · Aroma Capital`:'Comparar fragancias · Aroma Capital';
   pintarConcho();
