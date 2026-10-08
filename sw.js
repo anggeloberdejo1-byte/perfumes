@@ -1,6 +1,6 @@
 // Aroma Capital — service worker: guarda la página y las fotos para abrirla sin internet.
 // preparar.py cambia VERSION cada vez que cambian los archivos, así el celular baja lo nuevo.
-const VERSION = '7fc97ba83c';
+const VERSION = 'c5c2bd3292';
 const BASE = 'aroma-base-' + VERSION;
 const FOTOS = 'aroma-fotos-' + VERSION;
 const FUENTES = 'aroma-fuentes';
