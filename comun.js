@@ -106,8 +106,7 @@ function montarPiezas(activo){
 </div></section>
 <footer><div class="wrap">
   <div class="fcols">
-    <div><a class="logo" href="index.html"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small></span></a>
-      <p class="firma">By Anggelo Berdejo</p>
+    <div><a class="logo" href="index.html" style="margin-bottom:18px"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small><i class="firma">By Anggelo Berdejo</i></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
     <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
