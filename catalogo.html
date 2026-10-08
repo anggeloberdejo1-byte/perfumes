@@ -15,7 +15,7 @@
 <title>Catálogo · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=11">
+<link rel="stylesheet" href="estilo.css?v=12">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -78,8 +78,8 @@
   <div id="lista"></div>
 </main>
 
-<script src="datos.js?v=11"></script>
-<script src="comun.js?v=11"></script>
+<script src="datos.js?v=12"></script>
+<script src="comun.js?v=12"></script>
 <script>
 const qs=new URLSearchParams(location.search);
 const st={g:['M','H'].includes(qs.get('g'))?qs.get('g'):'T',s:SECCIONES.some(x=>x.id==qs.get('s'))?qs.get('s'):'',f:qs.get('f')||''};
