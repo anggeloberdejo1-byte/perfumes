@@ -15,7 +15,7 @@
 <title>Comparar fragancias · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=20">
+<link rel="stylesheet" href="estilo.css?v=21">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -53,6 +53,7 @@
 .ir .btn{font-size:15px;padding:16px 46px}
 .ir p{margin:8px 0 0;color:var(--muted);font-size:14px}
 .sug{margin-top:34px}
+#comp:not(:empty)+.sug{margin-top:64px;padding-top:30px;border-top:1px solid var(--line)}
 .sug h2{font-family:var(--display);font-weight:500;font-size:32px;margin:0}
 .sug p{margin:4px 0 0;color:var(--muted)}
 .sgrid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:16px}
@@ -125,13 +126,13 @@
   </section>
 
   <div class="ir" id="ir"></div>
-  <section class="sug" id="sug"></section>
   <section id="comp"></section>
+  <section class="sug" id="sug"></section>
 </main>
 
-<script src="datos.js?v=20"></script>
-<script src="fichas.js?v=20"></script>
-<script src="comun.js?v=20"></script>
+<script src="datos.js?v=21"></script>
+<script src="fichas.js?v=21"></script>
+<script src="comun.js?v=21"></script>
 <script>
 montarPiezas('comparar');
 const qs=new URLSearchParams(location.search);
