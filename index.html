@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1a1814">
+<meta name="description" content="Perfumes inspirados en Santo Domingo. Mira las fichas, monta tus favoritos en el concho y pide por WhatsApp.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aroma Capital">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<title>Aroma Capital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="estilo.css?v=8">
+<style>
+/* ---------- Banner rotativo ---------- */
+.hero{margin-top:14px;position:relative;overflow:hidden;touch-action:pan-y;border:1px solid var(--line)}
+.track{display:flex;transition:transform .6s cubic-bezier(.6,0,.2,1)}
+.slide{flex:0 0 100%;min-height:440px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);background:#fff}
+.slide .txt{background:var(--tint);padding:44px 48px;display:flex;flex-direction:column;justify-content:center}
+.slide.dark .txt{background:var(--ink);color:var(--on-ink)}
+.slide.dark .sub{color:var(--on-ink-muted)}
+.slide.dark .btn{background:var(--on-ink);color:var(--ink)}
+.slide.alt .txt{background:var(--tint2)}
+.slide h2{font-family:var(--display);font-weight:500;font-size:58px;line-height:.98;margin:0 0 14px;text-wrap:balance}
+.slide .sub{font-size:16px;max-width:36ch;margin:0 0 24px;color:var(--muted)}
+.slide .btn{align-self:flex-start}
+.stage{display:flex;align-items:flex-end;justify-content:center;gap:3%;padding:34px 28px 40px;background:#fff}
+.stage img{height:340px;width:auto;max-width:23%;object-fit:contain;object-position:bottom}
+.stage img:nth-child(odd){height:290px}
+.stage.big{align-items:center}
+.stage .carro-big{width:min(100%,380px);color:var(--ink)}
+.dots{position:absolute;right:22px;bottom:16px;display:flex;gap:10px;z-index:3}
+.dots button{all:unset;cursor:pointer;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink);background:#fff}
+.dots button.on{background:var(--ink)}
+
+/* ---------- Categorías ---------- */
+.sec{margin-top:22px}
+.cats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.cat{text-decoration:none;color:var(--on-ink);display:flex;flex-direction:column;border:1px solid var(--line)}
+.cat .pic{height:clamp(190px,23vw,290px);display:flex;align-items:flex-end;justify-content:center;gap:4%;padding:10% 8% 7%;background:#fff;overflow:hidden}
+.cat .pic img{height:90%;width:auto;max-width:40%;object-fit:contain;transition:transform .35s}
+.cat .pic img:nth-child(odd){height:74%}
+.cat:hover .pic img{transform:translateY(-6px)}
+.cat .lbl{background:var(--ink);text-align:center;padding:16px 10px 20px}
+.cat .lbl i{display:block;width:44px;height:1px;background:var(--accent);margin:0 auto 12px}
+.cat .lbl b{font-family:var(--display);font-weight:500;font-size:30px;letter-spacing:.04em}
+.cat .lbl small{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--on-ink-muted);margin-top:2px}
+
+/* ---------- Marcas ---------- */
+.brands{border-bottom:1px solid var(--line);padding:26px 0;overflow:hidden}
+.brands .lab{text-align:center;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.marquee{display:flex;gap:64px;width:max-content;animation:mq 50s linear infinite}
+.brands:hover .marquee{animation-play-state:paused}
+.marquee span{font-family:var(--display);font-size:28px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.marquee span:nth-child(3n){font-family:var(--body);font-weight:300;letter-spacing:.3em;font-size:22px}
+.marquee span:nth-child(4n){font-style:italic;text-transform:none;letter-spacing:.02em}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- Favoritos ---------- */
+.h-sec{text-align:center;margin:0 0 22px}
+.h-sec .thin{font-family:var(--display);font-weight:400;font-size:40px;line-height:1;letter-spacing:.06em;text-transform:uppercase}
+.h-sec .bold{font-family:var(--display);font-weight:600;font-size:46px;line-height:1;letter-spacing:.04em;text-transform:uppercase}
+.duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:48px}
+.panel{border:1px solid var(--line)}
+.panel .band{background:var(--tint);padding:30px 20px 24px}
+.panel.h .band{background:var(--tint2)}
+.panel .h-sec{margin:0}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc(50% - 8px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:22px 18px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rail .card{scroll-snap-align:start}
+.panel .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 18px 22px}
+.rail-dots{display:flex;gap:8px}
+.rail-dots button{all:unset;cursor:pointer;width:10px;height:10px;border-radius:50%;border:1.5px solid var(--ink)}
+.rail-dots button.on{background:var(--ink)}
+.panel .foot .btn{padding:11px 18px;font-size:12px}
+
+/* ---------- Tres tarjetas ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:56px}
+.tc{position:relative;padding:0 26px 26px}
+.tc:before{content:"";position:absolute;inset:44px 0 0 0;border:1px solid var(--line)}
+.tc .hd{position:relative;text-align:center;background:#fff;margin:0 auto 14px;padding:0 14px;width:max-content;max-width:100%}
+.tc .hd small{display:block;font-size:17px;letter-spacing:.06em;font-family:var(--display);font-style:italic;color:var(--muted)}
+.tc .hd b{display:block;font-family:var(--display);font-weight:600;font-size:36px;letter-spacing:.06em;text-transform:uppercase;line-height:1.05}
+.tc .im{position:relative;height:clamp(340px,32vw,420px);display:flex;align-items:center;justify-content:center;gap:3%;padding:8% 6% 24%;background:#fff;border-top:3px solid var(--accent)}
+.tc .im img{height:80%;width:auto;max-width:44%;object-fit:contain}
+.tc .im img:nth-child(2){height:92%}
+.tc .im .btn{position:absolute;bottom:7%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:14px;padding:14px 26px}
+
+@media (max-width:900px){
+  .slide{grid-template-columns:1fr;min-height:0}
+  .slide .txt{padding:30px 22px;text-align:center;align-items:center}
+  .slide .btn{align-self:center}
+  .slide h2{font-size:40px}
+  .stage{padding:22px 12px 40px}
+  .stage img{height:210px}.stage img:nth-child(odd){height:180px}
+  .cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .cat .lbl b{font-size:23px}
+  .duo{grid-template-columns:minmax(0,1fr)}
+  .trio{grid-template-columns:minmax(0,1fr);gap:34px}
+  .h-sec .thin{font-size:32px}.h-sec .bold{font-size:36px}
+}
+@media (max-width:640px){
+  .rail{padding:18px 12px}
+  .tc{padding:0 14px 18px}
+  .tc .hd b{font-size:30px}
+}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <section class="hero" id="hero" aria-roledescription="carrusel">
+    <div class="track" id="track">
+      <div class="slide">
+        <div class="txt">
+          <p class="kick">Más de 380 aromas</p>
+          <h2>Gran selección inspirada en los grandes</h2>
+          <p class="sub">Los perfumes que te gustan, con su ficha completa: notas, acordes y lo que opina la gente.</p>
+          <a class="btn" href="catalogo.html">Ver catálogo</a>
+        </div>
+        <div class="stage" data-imgs="E86 EM38 E50 EM77"></div>
+      </div>
+      <div class="slide dark">
+        <div class="txt">
+          <p class="kick">Así de fácil</p>
+          <h2>La fragancia que quieras, móntala en tu concho</h2>
+          <p class="sub">Toca <b>Montar</b> en cada perfume. Al final nos envías un solo mensaje por WhatsApp con todo.</p>
+          <a class="btn" href="#como">Cómo pedir</a>
+        </div>
+        <div class="stage big"><svg class="carro carro-big" viewBox="0 0 64 32" aria-hidden="true"></svg></div>
+      </div>
+      <div class="slide alt">
+        <div class="txt">
+          <p class="kick">Para él</p>
+          <h2>239 fragancias de hombre</h2>
+          <p class="sub">Diseñador, árabes y nicho. Frescos, amaderados, dulces y orientales.</p>
+          <a class="btn" href="catalogo.html?g=H">Ver hombres</a>
+        </div>
+        <div class="stage" data-imgs="E40 E110 E6 E99"></div>
+      </div>
+      <div class="slide">
+        <div class="txt">
+          <p class="kick">Para ella</p>
+          <h2>143 fragancias de mujer</h2>
+          <p class="sub">Florales, frutales, dulces y ambarados, de las marcas que más se piden.</p>
+          <a class="btn" href="catalogo.html?g=M">Ver mujeres</a>
+        </div>
+        <div class="stage" data-imgs="EM27 EM56 EM91 EM15"></div>
+      </div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <section class="sec cats" id="categorias">
+    <a class="cat" href="catalogo.html?g=H"><div class="pic" data-imgs="E50 E86 E22"></div><div class="lbl"><i></i><b>Para Él</b><small>239 perfumes</small></div></a>
+    <a class="cat" href="catalogo.html?g=M"><div class="pic" data-imgs="EM12 EM56 EM38"></div><div class="lbl"><i></i><b>Para Ella</b><small>143 perfumes</small></div></a>
+    <a class="cat" href="catalogo.html?s=arabes"><div class="pic" data-imgs="E80 E209 EM91"></div><div class="lbl"><i></i><b>Árabes</b><small id="nArabes"></small></div></a>
+    <a class="cat" href="catalogo.html?s=nicho"><div class="pic" data-imgs="E117 E87 E107"></div><div class="lbl"><i></i><b>Nicho</b><small id="nNicho"></small></div></a>
+  </section>
+
+  <section class="brands" aria-label="Marcas en las que nos inspiramos">
+    <div class="lab">Inspirados en</div>
+    <div class="marquee" id="marquee"></div>
+  </section>
+
+  <section class="duo">
+    <div class="panel m" id="ella">
+      <div class="band"><div class="h-sec"><div class="thin">Favoritos</div><div class="bold">Para Ella</div></div></div>
+      <div class="rail" data-codes="EM56 EM38 EM77 EM12 EM27 EM15 EM91 EM75"></div>
+      <div class="foot"><div class="rail-dots"></div><a class="btn ghost" href="catalogo.html?g=M">Ver todos los de ella</a></div>
+    </div>
+    <div class="panel h" id="el">
+      <div class="band"><div class="h-sec"><div class="thin">Favoritos</div><div class="bold">Para Él</div></div></div>
+      <div class="rail" data-codes="E110 E50 E86 E40 E6 E22 E99 E87"></div>
+      <div class="foot"><div class="rail-dots"></div><a class="btn ghost" href="catalogo.html?g=H">Ver todos los de él</a></div>
+    </div>
+  </section>
+
+  <section class="trio" id="como">
+    <div class="tc">
+      <div class="hd"><small>Así de fácil</small><b>Móntalo</b></div>
+      <div class="im" data-imgs="E44 EM15"><button class="btn" data-open-cart>Ver mi concho</button></div>
+    </div>
+    <div class="tc">
+      <div class="hd"><small>Diseñador, árabes o nicho</small><b>Tu estilo</b></div>
+      <div class="im" data-imgs="E1 E80 E86"><a class="btn" href="catalogo.html">Ver catálogo</a></div>
+    </div>
+    <div class="tc">
+      <div class="hd"><small>¿No lo ves?</small><b>Pídelo</b></div>
+      <div class="im" data-imgs="EM3 EM67"><a class="btn" id="pideBtn" target="_blank" rel="noopener">Escríbenos</a></div>
+    </div>
+  </section>
+</main>
+
+<script src="datos.js?v=8"></script>
+<script src="comun.js?v=8"></script>
+<script>
+montarPiezas('');
+$$('svg.carro').forEach(s=>s.innerHTML=CARRO);
+$$('[data-imgs]').forEach(el=>el.insertAdjacentHTML('afterbegin',el.dataset.imgs.split(' ').map(img).join('')));
+const cuenta=s=>PERFUMES.filter(p=>p[6]==s).length+' perfumes';
+$('#nArabes').textContent=cuenta('arabes');$('#nNicho').textContent=cuenta('nicho');
+
+/* Banner rotativo */
+(()=>{
+  const track=$('#track'),n=track.children.length,dots=$('#dots');let i=0,timer;
+  dots.innerHTML=[...Array(n)].map((_,k)=>`<button aria-label="Banner ${k+1}"></button>`).join('');
+  const go=k=>{i=(k+n)%n;track.style.transform=`translateX(-${i*100}%)`;[...dots.children].forEach((d,j)=>d.classList.toggle('on',j==i));clearInterval(timer);timer=setInterval(()=>go(i+1),6000)};
+  [...dots.children].forEach((d,k)=>d.onclick=()=>go(k));
+  let x0=null;const h=$('#hero');
+  h.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+  h.addEventListener('touchend',e=>{if(x0==null)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)go(i+(dx<0?1:-1));x0=null});
+  go(0);
+})();
+
+/* Marcas */
+(()=>{
+  const marcas=['Chanel','Dior','Creed','Carolina Herrera','Paco Rabanne','Versace','Tom Ford','Giorgio Armani','Lattafa','Parfums de Marly','Jean Paul Gaultier','Yves Saint Laurent','Dolce & Gabbana','Xerjoff','Valentino','Bond No. 9'];
+  const s=marcas.map(m=>`<span>${m}</span>`).join('');$('#marquee').innerHTML=s+s;
+})();
+
+/* Favoritos */
+$$('.rail').forEach(r=>{
+  r.innerHTML=r.dataset.codes.split(' ').map(card).join('');
+  const dots=r.nextElementSibling.querySelector('.rail-dots');
+  const draw=()=>{const n=Math.max(1,Math.round(r.scrollWidth/r.clientWidth)),k=Math.round(r.scrollLeft/r.clientWidth);
+    dots.innerHTML=[...Array(n)].map((_,j)=>`<button class="${j==k?'on':''}" aria-label="Página ${j+1}"></button>`).join('');
+    [...dots.children].forEach((d,j)=>d.onclick=()=>r.scrollTo({left:j*r.clientWidth,behavior:'smooth'}))};
+  r.addEventListener('scroll',()=>{clearTimeout(r._t);r._t=setTimeout(draw,80)});addEventListener('resize',draw);draw();
+});
+$('#pideBtn').href=waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ');
+pintarConcho();
+</script>
+</body>
+</html>
