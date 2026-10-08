@@ -15,7 +15,7 @@
 <title>Ficha · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=8">
+<link rel="stylesheet" href="estilo.css?v=9">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -28,7 +28,10 @@
 .nb{all:unset;cursor:pointer;width:38px;height:38px;border:1px solid var(--line);display:grid;place-items:center;font-size:22px;line-height:1}
 .nb:hover{border-color:var(--ink)}
 .swipehint{margin:10px 0 0;font-size:11px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
-@media (hover:hover) and (pointer:fine){.swipehint{display:none}}
+.swipehint.pc{display:none}
+@media (hover:hover) and (pointer:fine){.swipehint{display:none}.swipehint.pc{display:block}}
+#ficha{cursor:grab}#ficha a,#ficha button{cursor:pointer}
+#ficha .photo img{-webkit-user-drag:none;user-select:none}
 
 #ficha{touch-action:pan-y}
 #ficha.in-r{animation:inR .28s ease-out}#ficha.in-l{animation:inL .28s ease-out}
@@ -39,7 +42,7 @@
 @media (prefers-reduced-motion:reduce){#ficha.in-r,#ficha.in-l,#ficha.out-up{animation:none}}
 
 .fhero{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:44px;align-items:center;margin-top:26px}
-.photo{background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;padding:18px}
+.photo{background:#fff;display:flex;align-items:center;justify-content:center;aspect-ratio:3/4;padding:18px}
 .photo img{width:100%;height:100%;object-fit:contain}
 .wordmark{font-family:var(--display);font-size:22px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin:0}
 .fhero h1{font-family:var(--display);font-weight:500;font-size:60px;line-height:1;margin:6px 0 12px;text-wrap:balance}
@@ -48,8 +51,8 @@
 
 .block{margin-top:44px}
 .block>.label{display:block;margin-bottom:14px;color:var(--ink)}
-.acc{display:flex;flex-direction:column;max-width:400px}
-.acc div{height:26px;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:400;border-radius:0 7px 7px 0;min-width:96px;white-space:nowrap}
+.acc{display:flex;flex-direction:column;max-width:460px}
+.acc div{height:31px;display:flex;align-items:center;justify-content:center;font-size:14.5px;font-weight:400;border-radius:0 8px 8px 0;min-width:112px;white-space:nowrap}
 
 .notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .notes>div{border-top:1px solid var(--ink);padding-top:10px}
@@ -96,13 +99,14 @@
     <div class="pn"><button class="nb" id="prev" aria-label="Perfume anterior">‹</button><span class="pos" id="pos"></span><button class="nb" id="next" aria-label="Perfume siguiente">›</button></div>
   </div>
   <p class="swipehint">Desliza ← → para ver otro perfume · desliza ↑ sobre la foto para volver</p>
+  <p class="swipehint pc">Arrastra a los lados, desliza con dos dedos en el trackpad o usa las flechas ← → para ver otro perfume</p>
   <article id="ficha"></article>
   <section class="more" id="more"></section>
 </main>
 
-<script src="datos.js?v=8"></script>
-<script src="fichas.js?v=8"></script>
-<script src="comun.js?v=8"></script>
+<script src="datos.js?v=9"></script>
+<script src="fichas.js?v=9"></script>
+<script src="comun.js?v=9"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -149,11 +153,14 @@ html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button c
 <p class="src" style="margin-top:22px">${AVISO}</p>`;
 $('#ficha').innerHTML=html;
 
-// Otros de la misma familia
-const parecidos=PERFUMES.filter(x=>x[3]==genero&&x[4]==p[4]&&x[0]!=c);
-const k=parecidos.length?(PERFUMES.indexOf(p)%parecidos.length):0;
-const elegidos=[...parecidos.slice(k),...parecidos.slice(0,k)].slice(0,4);
-if(elegidos.length)$('#more').innerHTML=`<h2>También te puede gustar</h2><p class="label">Más de ${esc(p[4])}</p><div class="grid">${elegidos.map(x=>card(x[0])).join('')}</div>`;
+// Recomendados: los del mismo género con los acordes del PDF más parecidos
+// (se comparan nombres y largos de barra; el primer acorde pesa más).
+const vec=k=>{const v={};(ACORDES[k]||[]).forEach(([l,w],j)=>v[l]=w*(j==0?1.5:1));return v};
+const parecido=(a,b)=>{let d=0,na=0,nb=0;for(const l in a){na+=a[l]**2;if(b[l])d+=a[l]*b[l]}for(const l in b)nb+=b[l]**2;return na&&nb?d/Math.sqrt(na*nb):0};
+const yo=vec(c);
+const elegidos=PERFUMES.filter(x=>x[3]==genero&&x[0]!=c).map(x=>[x,parecido(yo,vec(x[0]))]).sort((a,b)=>b[1]-a[1]).slice(0,4).map(x=>x[0]);
+const principales=(ACORDES[c]||[]).slice(0,2).map(a=>a[0].toLowerCase()).join(' y ');
+if(elegidos.length)$('#more').innerHTML=`<h2>También te puede gustar</h2><p class="label">Con acordes parecidos${principales?': '+esc(principales):''}</p><div class="grid">${elegidos.map(x=>card(x[0])).join('')}</div>`;
 pintarConcho();
 
 // Entrada animada según la dirección
@@ -174,6 +181,22 @@ F.addEventListener('touchend',e=>{if(!T)return;const t=e.changedTouches[0],dx=t.
   if(ms>900)return;
   if(Math.abs(dx)>60&&Math.abs(dx)>1.6*Math.abs(dy)){ir(dx<0?1:-1);return}
   if(dy<-70&&Math.abs(dy)>1.6*Math.abs(dx)&&(s0.foto||s0.fin))salir()},{passive:true});
+
+// En computadora: arrastrar con el mouse o deslizar dos dedos en el trackpad.
+let M=null;
+F.addEventListener('pointerdown',e=>{if(e.pointerType!='mouse'||e.button!==0||e.target.closest('a,button'))return;M={x:e.clientX,y:e.clientY,t:Date.now()}});
+addEventListener('pointerup',e=>{if(!M)return;const dx=e.clientX-M.x,dy=e.clientY-M.y,ms=Date.now()-M.t;M=null;
+  if(ms<900&&Math.abs(dx)>80&&Math.abs(dx)>2*Math.abs(dy)&&!String(getSelection()).trim())ir(dx<0?1:-1)});
+F.addEventListener('dragstart',e=>e.preventDefault());
+let acum=0,quieto=null,usado=false;
+addEventListener('wheel',e=>{
+  if(Math.abs(e.deltaX)<=Math.abs(e.deltaY))return;
+  e.preventDefault();
+  clearTimeout(quieto);quieto=setTimeout(()=>{acum=0;usado=false},250);
+  if(usado)return;
+  acum+=e.deltaX;
+  if(Math.abs(acum)>110){usado=true;ir(acum>0?1:-1)}
+},{passive:false});
 </script>
 </body>
 </html>
