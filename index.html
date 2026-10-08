@@ -15,7 +15,7 @@
 <title>Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=9">
+<link rel="stylesheet" href="estilo.css?v=10">
 <style>
 /* ---------- Banner rotativo ---------- */
 .hero{margin-top:14px;position:relative;overflow:hidden;touch-action:pan-y;border:1px solid var(--line)}
@@ -33,7 +33,7 @@
 .stage img{height:340px;width:auto;max-width:23%;object-fit:contain;object-position:bottom}
 .stage img:nth-child(odd){height:290px}
 .stage.big{align-items:center}
-.stage .carro-big{width:min(100%,380px);color:var(--ink)}
+.stage .carro-big{width:min(100%,320px);color:#111}
 .dots{position:absolute;right:22px;bottom:16px;display:flex;gap:10px;z-index:3}
 .dots button{all:unset;cursor:pointer;width:11px;height:11px;border-radius:50%;border:1.5px solid var(--ink);background:#fff}
 .dots button.on{background:var(--ink)}
@@ -132,7 +132,7 @@
           <p class="sub">Toca <b>Montar</b> en cada perfume. Al final nos envías un solo mensaje por WhatsApp con todo.</p>
           <a class="btn" href="#como">Cómo pedir</a>
         </div>
-        <div class="stage big"><svg class="carro carro-big" viewBox="0 0 64 32" aria-hidden="true"></svg></div>
+        <div class="stage big"><svg class="carro carro-big" viewBox="0 0 64 48" aria-hidden="true"></svg></div>
       </div>
       <div class="slide alt">
         <div class="txt">
@@ -197,8 +197,8 @@
   </section>
 </main>
 
-<script src="datos.js?v=9"></script>
-<script src="comun.js?v=9"></script>
+<script src="datos.js?v=10"></script>
+<script src="comun.js?v=10"></script>
 <script>
 montarPiezas('');
 $$('svg.carro').forEach(s=>s.innerHTML=CARRO);

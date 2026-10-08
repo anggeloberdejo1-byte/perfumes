@@ -19,7 +19,7 @@ const img=c=>BY[c]&&BY[c][5]?`<img src="img/${c}.webp" alt="${esc(BY[c][1])}, ${
 const waLink=t=>`https://wa.me/${WA}?text=${encodeURIComponent(t)}`;
 const cat=(q={})=>'catalogo.html'+(Object.keys(q).length?'?'+new URLSearchParams(q):'');
 
-const CARRO='<path fill="currentColor" fill-rule="evenodd" d="M2 21.5V18c0-1.2.8-2 2-2.1l10.5-1L22 9c.6-.6 1.4-1 2.4-1h16c.9 0 1.7.4 2.3 1l6.3 6 11 1c1.2.1 2 .9 2 2.1v3.4c0 .8-.6 1.5-1.4 1.5H54a5 5 0 0 0-10 0H20a5 5 0 0 0-10 0H3.4c-.8 0-1.4-.7-1.4-1.5zM24.6 10.2 18.8 15H31v-4.8zm8.6 0V15h12.4l-5-4.8z"/><circle cx="15" cy="23" r="4" fill="currentColor"/><circle cx="49" cy="23" r="4" fill="currentColor"/><circle cx="15" cy="23" r="1.6" fill="var(--accent)"/><circle cx="49" cy="23" r="1.6" fill="var(--accent)"/>';
+const CARRO='<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h9l7 31h36" stroke-width="3.4"/><path d="M13.5 12H61l-5.5 19.5H18" stroke-width="3.4"/><path d="M15.2 19.5h43.7M16.9 26h40.2M25 12v19.5M33 12v19.5M41 12v19.5M49 12v19.5" stroke-width="2.4"/><circle cx="23" cy="42" r="3.4" stroke-width="3"/><circle cx="51" cy="42" r="3.4" stroke-width="3"/></g>';
 const WAICON='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>';
 const DIBUJO=`<svg class="dibujo" viewBox="0 0 620 360" role="img" aria-label="Dibujo de frascos de perfume">
 <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -83,7 +83,7 @@ function montarPiezas(activo){
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5.5 5.5"/></svg>
       <div class="results" id="results"></div>
     </div>
-    <button class="icon-btn" id="openCart" aria-label="Abrir tu concho"><svg viewBox="0 0 64 32" width="42" height="21" aria-hidden="true">${CARRO}</svg><span class="badge" id="badge" hidden>0</span><span class="t">Concho</span></button>
+    <button class="icon-btn" id="openCart" aria-label="Abrir tu concho"><svg viewBox="0 0 64 48" width="36" height="27" aria-hidden="true">${CARRO}</svg><span class="badge" id="badge" hidden>0</span><span class="t">Concho</span></button>
   </div>
   <nav class="nav"><div class="wrap">${nav.map(([t,h,k])=>`<a href="${h}" class="${k==activo?'on':''}">${t}</a>`).join('')}</div></nav>
 </header>`);
@@ -100,7 +100,7 @@ function montarPiezas(activo){
 </div></section>
 <section class="perks"><div class="wrap">
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><div><b>Pedidos por WhatsApp</b><span>829-232-4326</span></div></div>
-  <div class="perk"><svg viewBox="0 0 64 32" width="48" height="24" aria-hidden="true">${CARRO}</svg><div><b>Un solo mensaje</b><span>Todo tu concho de una vez</span></div></div>
+  <div class="perk"><svg class="cart" viewBox="0 0 64 48" width="44" height="33" aria-hidden="true">${CARRO}</svg><div><b>Un solo mensaje</b><span>Todo tu concho de una vez</span></div></div>
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><rect x="6" y="8" width="12" height="13" rx="2"/><path d="M9 8V5h6v3M10 3h4"/><path d="M9 14h6"/></svg><div><b>Ficha completa</b><span>Notas, acordes y opiniones</span></div></div>
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><div><b>Santo Domingo</b><span>República Dominicana</span></div></div>
 </div></section>
@@ -119,7 +119,7 @@ function montarPiezas(activo){
   </div>
   <div class="legal">© 2026 Aroma Capital · ${AVISO}</div>
 </div></footer>
-<button class="fab" id="fab" data-open-cart aria-label="Abrir tu concho"><svg viewBox="0 0 64 32" width="40" height="20" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
+<button class="fab" id="fab" data-open-cart aria-label="Abrir tu concho"><svg viewBox="0 0 64 48" width="34" height="26" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
 <div class="veil" id="veil"></div>
 <aside class="drawer" id="drawer" aria-label="Tu concho">
   <div class="dh"><h3>Tu concho</h3><button class="x" id="closeCart" aria-label="Cerrar">✕</button></div>

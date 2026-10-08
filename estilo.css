@@ -82,6 +82,7 @@ a{color:inherit}
 .perks .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:28px;padding-bottom:28px}
 .perk{display:flex;gap:16px;align-items:flex-start}
 .perk svg{flex:none;color:var(--ink);opacity:.75}
+.perk svg.cart{color:#111;opacity:1}
 .perk b{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:500}
 .perk span{font-size:14px;color:var(--muted)}
 footer{background:var(--ink);color:var(--on-ink);padding:46px 0 28px}
@@ -100,9 +101,9 @@ footer a:hover{color:var(--accent-soft)}
 .instalar.btn.ghost:hover{background:var(--on-ink);color:var(--ink)}
 .instalar[hidden]{display:none}
 .legal{border-top:1px solid rgba(255,255,255,.1);margin-top:30px;padding-top:20px;font-size:12px;color:var(--on-ink-muted);text-align:center}
-.fab{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:var(--ink);color:var(--on-ink);border:1px solid var(--accent);display:grid;place-items:center;cursor:pointer;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.22);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s}
+.fab{position:fixed;right:18px;bottom:18px;width:64px;height:64px;border-radius:50%;background:#fff;color:#111;border:1.5px solid #111;display:grid;place-items:center;cursor:pointer;z-index:20;box-shadow:0 8px 24px rgba(0,0,0,.22);opacity:0;transform:translateY(16px);pointer-events:none;transition:opacity .3s,transform .3s}
 .fab.on{opacity:1;transform:none;pointer-events:auto}
-.fab:hover{background:var(--bar)}
+.fab:hover{background:var(--tint)}
 .fbadge{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;padding:0 6px;border-radius:11px;background:var(--wa);color:#fff;font-size:12px;font-weight:500;display:grid;place-items:center}
 .fbadge[hidden]{display:none}
 
