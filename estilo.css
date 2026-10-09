@@ -75,7 +75,7 @@ a{color:inherit}
 .pide p{margin:0 0 16px;max-width:42ch}
 .pide p b{display:block;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 .pide .btn{margin:8px 0 44px}
-.dibujo{width:100%;max-width:620px;height:auto;display:block;justify-self:end}
+.dibujo{width:100%;max-width:620px;height:auto;display:block;justify-self:end;mix-blend-mode:multiply}
 
 /* ---------- Franja de ventajas y pie ---------- */
 .perks{background:var(--tint)}

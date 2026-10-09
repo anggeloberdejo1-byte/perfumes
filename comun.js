@@ -76,7 +76,7 @@ function montarPiezas(activo){
     <p><b>Cómo pedir</b>Agrega a tu carrito los perfumes que quieras y envíanos un solo mensaje.</p>
     <a class="btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
   </div>
-  <img class="dibujo" src="iconos/dibujo-estante.jpg" alt="Dibujo de frascos de perfume en un estante" width="1300" height="591" loading="lazy">
+  <img class="dibujo" src="iconos/dibujo-estante.jpg" alt="Dibujo de frascos de perfume en un estante" width="1300" height="588" loading="lazy">
 </div></section>
 <section class="perks"><div class="wrap">
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><div><b>Pedidos por WhatsApp</b><span>829-232-4326</span></div></div>
