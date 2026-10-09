@@ -15,7 +15,7 @@
 <title>Ficha · Aroma Capital</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=22">
+<link rel="stylesheet" href="estilo.css?v=23">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -74,8 +74,6 @@
 .cta p{margin:0;font-family:var(--display);font-size:28px}
 .cta .acts{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .cta .montar{border-color:var(--on-ink);color:var(--on-ink);padding:11px 18px;font-size:13px}
-.cta .comparar-btn{background:transparent;border:1px solid var(--on-ink);color:var(--on-ink);padding:11px 18px;font-size:13px}
-.cta .comparar-btn:hover{background:var(--on-ink);color:var(--ink)}
 .cta .montar:hover,.cta .montar.on{background:var(--on-ink);color:var(--ink)}
 
 .more{margin-top:56px}
@@ -106,9 +104,9 @@
   <section class="more" id="more"></section>
 </main>
 
-<script src="datos.js?v=22"></script>
-<script src="fichas.js?v=22"></script>
-<script src="comun.js?v=22"></script>
+<script src="datos.js?v=23"></script>
+<script src="fichas.js?v=23"></script>
+<script src="comun.js?v=23"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -151,7 +149,7 @@ if(d&&d.notes){
 }
 if(d&&d.rating)html+=`<section class="block"><div class="panels"><div class="vpanel"><span class="label">Qué opina la gente</span>${bars(d.rating)}</div><div class="vpanel"><span class="label">Cuándo usarlo</span>${bars(d.when)}</div></div><p class="src">Opiniones de referencia sobre la fragancia original.</p></section>`;
 if(!d)html+=`<div class="pending">Pronto agregamos la descripción y las notas de este perfume.</div>`;
-html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Agregar a mi carrito" data-on="Ya está en tu carrito ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a><a class="btn comparar-btn" href="comparar.html?a=${encodeURIComponent(c)}">Comparar</a></div></div>
+html+=`<div class="cta"><p>¿Te gusta este aroma?</p><div class="acts"><button class="montar" data-code="${c}" data-off="Agregar a mi carrito" data-on="Ya está en tu carrito ✓"></button><a class="wa-btn" href="${waLink(consulta)}" target="_blank" rel="noopener">${WAICON} Consultar solo este</a></div></div>
 <p class="src" style="margin-top:22px">${AVISO}</p>`;
 $('#ficha').innerHTML=html;
 

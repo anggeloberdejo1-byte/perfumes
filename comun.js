@@ -53,7 +53,7 @@ function card(c){
 }
 
 function montarPiezas(activo){
-  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Cómo pedir','index.html#como','como'],['Comparar','comparar.html','comparar']];
+  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Cómo pedir','index.html#como','como']];
   document.body.insertAdjacentHTML('afterbegin',`
 <header class="top">
   <div class="wrap">
@@ -89,7 +89,7 @@ function montarPiezas(activo){
     <div><a class="logo" href="index.html" style="margin-bottom:18px"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small><i class="firma">By Anggelo Berdejo</i></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
-    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a><a href="comparar.html">Comparar fragancias</a></div>
+    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
     <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
     <div><h4>Aviso</h4><p>${AVISO}</p><button class="instalar btn ghost" hidden>Guardar en mi celular</button></div>
   </div>
