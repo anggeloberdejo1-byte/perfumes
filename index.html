@@ -15,7 +15,7 @@
 <title>Arpeggio · Perfumería</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&display=swap">
-<link rel="stylesheet" href="estilo.css?v=30">
+<link rel="stylesheet" href="estilo.css?v=31">
 <style>
 /* ---------- Banner rotativo ---------- */
 .hero{margin-top:14px;position:relative;overflow:hidden;touch-action:pan-y;border:1px solid var(--line)}
@@ -28,7 +28,7 @@
 .slide.marca{background:linear-gradient(to right,var(--tint) 0 45%,#fff 45%);position:relative}
 .slide.marca .txt{background:transparent;position:relative;z-index:2}
 .stage.poster{position:relative;padding:0;overflow:visible;background:transparent}
-.slide.marca .stage.poster img{position:absolute;top:50%;left:50%;height:580px;width:auto;max-width:none;transform:translate(-50%,-50%);mix-blend-mode:multiply;pointer-events:none}
+.slide.marca .stage.poster img{position:absolute;top:50%;left:50%;height:596px;width:auto;max-width:none;transform:translate(-50%,-50%);mix-blend-mode:multiply;pointer-events:none}
 .slide.dark .sub{color:var(--on-ink-muted)}
 .slide.dark .btn{background:var(--on-ink);color:var(--ink)}
 .slide.alt .txt{background:var(--tint2)}
@@ -107,7 +107,7 @@
   .slide.marca{background:#fff}
   .slide.marca .txt{background:var(--tint)}
   .stage.poster{padding:10px 0 30px}
-  .slide.marca .stage.poster img{position:static;transform:none;height:360px}
+  .slide.marca .stage.poster img{position:static;transform:none;height:auto;width:100%;max-width:520px;margin:0 auto}
   .cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .cat .lbl b{font-size:23px}
   .duo{grid-template-columns:minmax(0,1fr)}
@@ -133,7 +133,7 @@
           <p class="sub">Notas de salida, de corazón y de fondo. Más de 380 perfumes inspirados en los grandes, cada uno con su ficha completa.</p>
           <a class="btn" href="catalogo.html">Ver catálogo</a>
         </div>
-        <div class="stage poster"><img src="iconos/logo-arpeggio.jpg" alt="Arpeggio, perfumería" width="760" height="1070"></div>
+        <div class="stage poster"><img src="iconos/logo-arpeggio.jpg" alt="Arpeggio, perfumería" width="1300" height="1100"></div>
       </div>
       <div class="slide">
         <div class="txt">
@@ -216,8 +216,8 @@
   </section>
 </main>
 
-<script src="datos.js?v=30"></script>
-<script src="comun.js?v=30"></script>
+<script src="datos.js?v=31"></script>
+<script src="comun.js?v=31"></script>
 <script>
 montarPiezas('');
 $$('svg.carro').forEach(s=>s.innerHTML=CARRO);
