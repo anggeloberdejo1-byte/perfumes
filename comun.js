@@ -86,7 +86,7 @@ function montarPiezas(activo){
 </div></section>
 <footer><div class="wrap">
   <div class="fcols">
-    <div><a class="logo" href="index.html" style="margin-bottom:18px" aria-label="Arpeggio, inicio"><span><b>arpeggio</b><small>Perfumería</small><i class="firma">By Anggelo Berdejo</i></span></a>
+    <div><a class="logo" href="index.html" style="margin-bottom:18px" aria-label="Arpeggio, inicio"><span><b>arpeggio</b><small>Perfumería</small></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Arpeggio')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
     <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
