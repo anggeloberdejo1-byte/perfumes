@@ -1,6 +1,6 @@
 // Aroma Capital — service worker: guarda la página y las fotos para abrirla sin internet.
 // preparar.py cambia VERSION cada vez que cambian los archivos, así el celular baja lo nuevo.
-const VERSION = 'eb0b04b1bf';
+const VERSION = '5b7da26974';
 const BASE = 'aroma-base-' + VERSION;
 const FOTOS = 'aroma-fotos-' + VERSION;
 const FUENTES = 'aroma-fuentes';
@@ -9,7 +9,7 @@ const PAGINAS = [
   './', 'index.html', 'catalogo.html', 'ficha.html', 'comparar.html',
   'estilo.css', 'comun.js', 'datos.js', 'fichas.js',
   'manifest.webmanifest', 'iconos/icono-192.png', 'iconos/icono-512.png',
-  'iconos/apple-touch-icon.png', 'iconos/favicon-32.png',
+  'iconos/apple-touch-icon.png', 'iconos/favicon-32.png', 'iconos/dibujo-frascos.jpg',
 ];
 
 self.addEventListener('install', e => {

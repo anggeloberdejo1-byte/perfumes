@@ -21,32 +21,6 @@ const cat=(q={})=>'catalogo.html'+(Object.keys(q).length?'?'+new URLSearchParams
 
 const CARRO='<g transform="translate(350,0) scale(-1,1)" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M292 5L247 7L196 138" stroke-width="11"/><path d="M58 46H233M60 46L72 130L196 138" stroke-width="11"/><path d="M88 46V132M113 46V133M138 46V135M163 46V136M188 46V137M64 74H222M68 102H211" stroke-width="7"/><path d="M196 138C204 158 224 162 228 182H66" stroke-width="10"/><circle cx="86" cy="198" r="9" stroke-width="6"/><circle cx="212" cy="198" r="9" stroke-width="6"/></g>';
 const WAICON='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3z"/></svg>';
-const DIBUJO=`<svg class="dibujo" viewBox="0 0 620 360" role="img" aria-label="Dibujo de frascos de perfume">
-<g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M14 341H606"/>
-  <path d="M40 340V252a25 25 0 0 1 50 0v88z"/><path d="M40 264h50"/><path d="M49 280v14M49 302v26" stroke-width="1.6"/>
-  <circle cx="120" cy="192" r="31"/><path d="M150 198c10-12 22-12 31-4"/>
-  <path d="M127 340c-15-40 5-95 63-95s78 55 63 95z"/><path d="M136 340c-6-12-7-26-3-38" stroke-width="1.6"/>
-  <rect x="174" y="217" width="32" height="28" rx="3"/><rect x="169" y="206" width="42" height="12" rx="3"/><path d="M182 206v-26l8-15 8 15v26"/>
-  <rect x="290" y="150" width="80" height="190" rx="8"/><rect x="302" y="80" width="56" height="70" rx="6"/><path d="M312 92v46" stroke-width="1.6"/>
-  <circle cx="360" cy="100" r="5"/><path d="M299 166v12M299 188v140" stroke-width="1.6"/>
-  <circle cx="330" cy="224" r="14"/><circle cx="330" cy="256" r="14"/><circle cx="314" cy="240" r="14"/><circle cx="346" cy="240" r="14"/>
-  <rect x="391" y="176" width="112" height="164" rx="18"/><rect x="426" y="152" width="42" height="24" rx="4"/><rect x="419" y="128" width="56" height="25" rx="5"/>
-  <path d="M403 196c0-6 3-9 9-10" stroke-width="1.6"/><path d="M400 214v10M400 234v92" stroke-width="1.6"/>
-  <circle cx="430" cy="222" r="13"/><circle cx="474" cy="258" r="22"/><circle cx="433" cy="272" r="9"/><circle cx="460" cy="303" r="17"/>
-  <path d="M424 216a6 6 0 0 1 6-5M466 246a10 10 0 0 1 10-6M454 295a7 7 0 0 1 7-5" stroke-width="1.6"/>
-  <path d="M526 340l-5-68q0-16 15-16h38q15 0 15 16l-5 68z"/><rect x="545" y="240" width="20" height="16" rx="2"/>
-  <path d="M555 240l-20-26 20-30 20 30z"/><rect x="536" y="286" width="38" height="26" rx="2" stroke-width="1.6"/>
-</g>
-<g fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round">
-  <path d="M65 283c-7 10-10 15-10 20a10 10 0 0 0 20 0c0-5-3-10-10-20z"/>
-  <path d="M206 186l48-18M208 192l50-4M208 198l50 9M206 204l46 20" stroke-dasharray="14 7"/>
-  <path d="M366 98l62-28M367 100l68-8M367 103l66 12M365 106l60 30" stroke-dasharray="16 8"/>
-  <circle cx="330" cy="240" r="6"/>
-  <path d="M140 300q50 16 100 0" stroke-dasharray="10 6"/>
-  <path d="M555 184v56M535 214h40" stroke-width="1.4"/>
-  <path d="M545 299h20" stroke-width="1.6"/>
-</g></svg>`;
 // Redes sociales: cambia "#" por el enlace de cada cuenta cuando los tengas.
 const REDES=[
   ['Facebook','#','<path fill="currentColor" d="M13.5 21v-7.5H16l.4-3h-2.9V8.7c0-.9.3-1.4 1.5-1.4h1.5V4.6a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.2H8.1v3h2.5V21z"/>'],
@@ -102,7 +76,7 @@ function montarPiezas(activo){
     <p><b>Cómo pedir</b>Agrega a tu carrito los perfumes que quieras y envíanos un solo mensaje.</p>
     <a class="btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
   </div>
-  ${DIBUJO}
+  <img class="dibujo" src="iconos/dibujo-frascos.jpg" alt="Dibujo de frascos de perfume" width="1300" height="659" loading="lazy">
 </div></section>
 <section class="perks"><div class="wrap">
   <div class="perk"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg><div><b>Pedidos por WhatsApp</b><span>829-232-4326</span></div></div>

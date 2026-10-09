@@ -75,7 +75,7 @@ a{color:inherit}
 .pide p{margin:0 0 16px;max-width:42ch}
 .pide p b{display:block;font-weight:500;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
 .pide .btn{margin:8px 0 44px}
-.dibujo{width:100%;height:auto;color:var(--ink);display:block}
+.dibujo{width:100%;max-width:620px;height:auto;display:block;justify-self:end}
 
 /* ---------- Franja de ventajas y pie ---------- */
 .perks{background:var(--tint)}
@@ -132,6 +132,7 @@ footer .logo .firma{display:block;text-align:center;font-family:var(--display);f
   .perks .wrap{grid-template-columns:1fr 1fr}
   .fcols{grid-template-columns:1fr 1fr}
   .pide .wrap{grid-template-columns:minmax(0,1fr);gap:10px}
+  .dibujo{justify-self:center}
   .pide .btn{margin-bottom:10px}
 }
 @media (max-width:640px){
