@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#1a1814">
-<meta name="description" content="Perfumes inspirados en Santo Domingo. Mira las fichas, agrega tus favoritos al carrito y pide por WhatsApp.">
+<meta name="theme-color" content="#121212">
+<meta name="description" content="Arpeggio, perfumería en Santo Domingo: perfumes inspirados con su ficha completa. Agrega tus favoritos al carrito y pide por WhatsApp.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Aroma Capital">
+<meta name="apple-mobile-web-app-title" content="Arpeggio">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>Ficha · Aroma Capital</title>
+<title>Ficha · Arpeggio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=25">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&display=swap">
+<link rel="stylesheet" href="estilo.css?v=26">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -104,9 +104,9 @@
   <section class="more" id="more"></section>
 </main>
 
-<script src="datos.js?v=25"></script>
-<script src="fichas.js?v=25"></script>
-<script src="comun.js?v=25"></script>
+<script src="datos.js?v=26"></script>
+<script src="fichas.js?v=26"></script>
+<script src="comun.js?v=26"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -126,7 +126,7 @@ const sec=SECCIONES.find(s=>s.id==p[6]);
 const gNom=genero=='H'?'Para Él':'Para Ella';
 const consulta=`Hola, quiero pedir el perfume ${c}, inspirado en ${p[1]} de ${p[2]}. ¿Está disponible?`;
 
-document.title=`${p[1]} · Aroma Capital`;
+document.title=`${p[1]} · Arpeggio`;
 $('#crumbs').innerHTML=`<a href="index.html">Inicio</a> / <a href="${cat({g:genero})}">${gNom}</a> / <a href="${cat({g:genero,s:sec.id})}">${sec.nombre}</a> / ${esc(p[1])}`;
 $('#pos').textContent=`${i+1} / ${lista.length}`;
 

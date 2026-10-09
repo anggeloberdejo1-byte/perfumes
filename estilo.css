@@ -1,13 +1,14 @@
-/* Aroma Capital — estilos compartidos (inicio y catálogo) */
+/* Arpeggio — estilos compartidos (inicio, catálogo y ficha) */
 :root{
   --bg:#ffffff; --muted:#6f6a61; --line:#e8e3da; --wa:#1fa855;
   --display:"Cormorant Garamond","Times New Roman",serif;
-  --body:"Jost","Helvetica Neue",Arial,sans-serif;
+  --body:"Inter","Helvetica Neue",Arial,sans-serif;
+  --marca:"Inter","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
-  /* Paleta: Marfil y Oro */
-  --ink:#1a1814; --bar:#26231f; --accent:#b4975a; --accent-soft:#d8c49f;
-  --tint:#f6f2eb; --tint2:#ece4d6; --on-ink:#f7f4ee; --on-ink-muted:#b9b2a5;
-  --tag-h:#4a5a72; --tag-m:#8a5f7e;
+  /* Paleta Arpeggio: negro, cobalto y el amarillo del logo */
+  --ink:#121212; --bar:#1b1b1e; --accent:#2b56c8; --accent-soft:#8ea6ea; --amarillo:#f7ea48;
+  --tint:#f3f2ee; --tint2:#e9eefa; --on-ink:#f5f5f2; --on-ink-muted:#a7abb5;
+  --tag-h:#2b56c8; --tag-m:#5b4bb0;
 }
 
 *{box-sizing:border-box}
@@ -22,12 +23,12 @@ a{color:inherit}
 .top>.wrap{display:flex;align-items:center;gap:18px;height:72px}
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--on-ink);flex:none}
 .mono{width:40px;height:40px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;font-family:var(--display);font-style:italic;font-size:20px;color:var(--accent)}
-.logo b{display:block;font-family:var(--display);font-weight:500;font-size:22px;letter-spacing:.3em;line-height:1}
-.logo small{display:block;font-size:10px;letter-spacing:.2em;color:var(--on-ink-muted);text-transform:uppercase;margin-top:4px}
+.logo b{display:block;font-family:var(--marca);font-weight:900;font-size:30px;letter-spacing:-.035em;line-height:.9;text-transform:lowercase}
+.logo small{display:block;font-size:9.5px;font-weight:500;letter-spacing:.32em;color:var(--amarillo);text-transform:uppercase;margin-top:6px}
 .search{flex:1;max-width:420px;margin-left:auto;position:relative}
-.search input{width:100%;height:42px;border:0;border-radius:3px;padding:0 42px 0 14px;font:inherit;font-weight:400;font-size:14px;color:#1a1814;background:#fff}
-.search svg{position:absolute;right:12px;top:11px;color:#1a1814}
-.results{position:absolute;left:0;right:0;top:48px;background:#fff;color:#1a1814;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.18);max-height:60vh;overflow:auto;display:none}
+.search input{width:100%;height:42px;border:0;border-radius:3px;padding:0 42px 0 14px;font:inherit;font-weight:400;font-size:14px;color:#121212;background:#fff}
+.search svg{position:absolute;right:12px;top:11px;color:#121212}
+.results{position:absolute;left:0;right:0;top:48px;background:#fff;color:#121212;border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.18);max-height:60vh;overflow:auto;display:none}
 .results.on{display:block}
 .res{display:flex;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid var(--line)}
 .res .th{width:40px;height:48px;flex:none;display:grid;place-items:center}
@@ -137,7 +138,7 @@ footer .logo .firma{display:block;text-align:center;font-family:var(--display);f
 }
 @media (max-width:640px){
   .top>.wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:10px 14px}
-  .logo b{font-size:18px;letter-spacing:.22em}
+  .logo b{font-size:25px;letter-spacing:-.035em}
   .top .logo small{display:none}
   .icon-btn{margin-left:auto}
   .icon-btn .t{display:none}

@@ -1,4 +1,4 @@
-// Aroma Capital — piezas compartidas: encabezado, pie, carrito, búsqueda y tarjetas.
+// Arpeggio — piezas compartidas: encabezado, pie, carrito, búsqueda y tarjetas.
 const WA='18292324326';
 
 // Sección de cada marca. Lo que no está aquí es "Diseñador".
@@ -57,7 +57,7 @@ function montarPiezas(activo){
   document.body.insertAdjacentHTML('afterbegin',`
 <header class="top">
   <div class="wrap">
-    <a class="logo" href="index.html"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados · Santo Domingo</small></span></a>
+    <a class="logo" href="index.html" aria-label="Arpeggio, inicio"><span><b>arpeggio</b><small>Perfumería · Santo Domingo</small></span></a>
     <div class="search">
       <input id="q" type="search" placeholder="Buscar perfume o marca" autocomplete="off" aria-label="Buscar perfume o marca">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7"/><path d="m16 16 5.5 5.5"/></svg>
@@ -74,7 +74,7 @@ function montarPiezas(activo){
     <p><b>Dónde estamos</b>Santo Domingo, República Dominicana</p>
     <p><b>Pedidos</b>Por WhatsApp al 829-232-4326</p>
     <p><b>Cómo pedir</b>Agrega a tu carrito los perfumes que quieras y envíanos un solo mensaje.</p>
-    <a class="btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+    <a class="btn" href="${waLink('Hola Arpeggio')}" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
   </div>
   <img class="dibujo" src="iconos/dibujo-estante.jpg" alt="Dibujo de frascos de perfume en un estante" width="1300" height="588" loading="lazy">
 </div></section>
@@ -86,18 +86,18 @@ function montarPiezas(activo){
 </div></section>
 <footer><div class="wrap">
   <div class="fcols">
-    <div><a class="logo" href="index.html" style="margin-bottom:18px"><span class="mono">A</span><span><b>AROMA CAPITAL</b><small>Perfumes inspirados</small><i class="firma">By Anggelo Berdejo</i></span></a>
+    <div><a class="logo" href="index.html" style="margin-bottom:18px" aria-label="Arpeggio, inicio"><span><b>arpeggio</b><small>Perfumería</small><i class="firma">By Anggelo Berdejo</i></span></a>
       <p>Santo Domingo, República Dominicana</p>
-      <a class="wa-btn" href="${waLink('Hola Aroma Capital')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
+      <a class="wa-btn" href="${waLink('Hola Arpeggio')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
     <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
-    <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
+    <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Arpeggio, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
     <div><h4>Aviso</h4><p>${AVISO}</p><button class="instalar btn ghost" hidden>Guardar en mi celular</button></div>
   </div>
   <div class="fbar">
     <div><h4>Aceptamos</h4><div class="pagos">${PAGOS}</div></div>
-    <div><h4>Síguenos</h4><div class="redes">${REDES.map(([n,h,ic])=>`<a href="${h}" aria-label="${n}" title="${n}"${h!='#'?' target="_blank" rel="noopener"':''}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${ic}</svg></a>`).join('')}<a href="${waLink('Hola Aroma Capital')}" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">${WAICON.replace('width="18" height="18"','width="22" height="22"')}</a></div></div>
+    <div><h4>Síguenos</h4><div class="redes">${REDES.map(([n,h,ic])=>`<a href="${h}" aria-label="${n}" title="${n}"${h!='#'?' target="_blank" rel="noopener"':''}><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">${ic}</svg></a>`).join('')}<a href="${waLink('Hola Arpeggio')}" aria-label="WhatsApp" title="WhatsApp" target="_blank" rel="noopener">${WAICON.replace('width="18" height="18"','width="22" height="22"')}</a></div></div>
   </div>
-  <div class="legal">© 2026 Aroma Capital · By Anggelo Berdejo</div>
+  <div class="legal">© 2026 Arpeggio · By Anggelo Berdejo</div>
 </div></footer>
 <button class="fab" id="fab" data-open-cart aria-label="Abrir tu carrito"><svg viewBox="50 -2 250 214" width="36" height="31" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
 <div class="veil" id="veil"></div>
@@ -116,7 +116,7 @@ function montarPiezas(activo){
     if(q.length<2){box.classList.remove('on');return}
     const hits=PERFUMES.filter(p=>norm(p[1]+' '+p[2]).includes(q)).slice(0,30);
     box.innerHTML=hits.length?hits.map(p=>`<div class="res"><div class="th">${img(p[0])}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])} · ${p[3]=='H'?'Hombre':'Mujer'}</span></div><button class="montar" data-code="${p[0]}" style="padding:7px 10px;font-size:10px"></button></div>`).join('')
-      :`<div class="empty">No lo encontramos. <a href="${waLink('Hola Aroma Capital, ¿tienen '+e.target.value.trim()+'?')}" target="_blank" rel="noopener">Pídelo por WhatsApp</a></div>`;
+      :`<div class="empty">No lo encontramos. <a href="${waLink('Hola Arpeggio, ¿tienen '+e.target.value.trim()+'?')}" target="_blank" rel="noopener">Pídelo por WhatsApp</a></div>`;
     box.classList.add('on');pintarConcho();
   });
 
@@ -152,7 +152,7 @@ function pintarConcho(){
   $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito'):(m.dataset.off||'Agregar')});
   $('#dlist').innerHTML=cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
     :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>';
-  const msg=`Hola, quiero consultar por estos perfumes de Aroma Capital:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}\n¿Están disponibles y qué precio tienen?`;
+  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}\n¿Están disponibles y qué precio tienen?`;
   $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 

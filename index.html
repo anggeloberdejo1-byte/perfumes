@@ -3,26 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#1a1814">
-<meta name="description" content="Perfumes inspirados en Santo Domingo. Mira las fichas, agrega tus favoritos al carrito y pide por WhatsApp.">
+<meta name="theme-color" content="#121212">
+<meta name="description" content="Arpeggio, perfumería en Santo Domingo: perfumes inspirados con su ficha completa. Agrega tus favoritos al carrito y pide por WhatsApp.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Aroma Capital">
+<meta name="apple-mobile-web-app-title" content="Arpeggio">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>Aroma Capital</title>
+<title>Arpeggio · Perfumería</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap">
-<link rel="stylesheet" href="estilo.css?v=25">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&display=swap">
+<link rel="stylesheet" href="estilo.css?v=26">
 <style>
 /* ---------- Banner rotativo ---------- */
 .hero{margin-top:14px;position:relative;overflow:hidden;touch-action:pan-y;border:1px solid var(--line)}
 .track{display:flex;transition:transform .6s cubic-bezier(.6,0,.2,1)}
 .slide{flex:0 0 100%;min-height:440px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);background:#fff}
 .slide .txt{background:var(--tint);padding:44px 48px;display:flex;flex-direction:column;justify-content:center}
-.slide.dark .txt{background:var(--ink);color:var(--on-ink)}
+.slide.dark .txt{background:var(--ink) url(iconos/textura-azul.jpg) center/cover;color:var(--on-ink)}
+.slide.dark .kick{color:var(--amarillo)}
+.stage.poster{align-items:center;padding:22px}
+.stage.poster img{height:400px;width:auto;max-width:100%;object-fit:contain}
 .slide.dark .sub{color:var(--on-ink-muted)}
 .slide.dark .btn{background:var(--on-ink);color:var(--ink)}
 .slide.alt .txt{background:var(--tint2)}
@@ -98,6 +101,7 @@
   .slide h2{font-size:40px}
   .stage{padding:22px 12px 40px}
   .stage img{height:210px}.stage img:nth-child(odd){height:180px}
+  .stage.poster img{height:320px}
   .cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .cat .lbl b{font-size:23px}
   .duo{grid-template-columns:minmax(0,1fr)}
@@ -116,6 +120,15 @@
 <main class="wrap">
   <section class="hero" id="hero" aria-roledescription="carrusel">
     <div class="track" id="track">
+      <div class="slide marca">
+        <div class="txt">
+          <p class="kick">Perfumería · Santo Domingo</p>
+          <h2>Una nota a la vez, como un arpegio</h2>
+          <p class="sub">Notas de salida, de corazón y de fondo. Más de 380 perfumes inspirados en los grandes, cada uno con su ficha completa.</p>
+          <a class="btn" href="catalogo.html">Ver catálogo</a>
+        </div>
+        <div class="stage poster"><img src="iconos/logo-arpeggio.jpg" alt="Arpeggio, perfumería" width="760" height="1070"></div>
+      </div>
       <div class="slide">
         <div class="txt">
           <p class="kick">Más de 380 aromas</p>
@@ -197,8 +210,8 @@
   </section>
 </main>
 
-<script src="datos.js?v=25"></script>
-<script src="comun.js?v=25"></script>
+<script src="datos.js?v=26"></script>
+<script src="comun.js?v=26"></script>
 <script>
 montarPiezas('');
 $$('svg.carro').forEach(s=>s.innerHTML=CARRO);
@@ -233,7 +246,7 @@ $$('.rail').forEach(r=>{
     [...dots.children].forEach((d,j)=>d.onclick=()=>r.scrollTo({left:j*r.clientWidth,behavior:'smooth'}))};
   r.addEventListener('scroll',()=>{clearTimeout(r._t);r._t=setTimeout(draw,80)});addEventListener('resize',draw);draw();
 });
-$('#pideBtn').href=waLink('Hola Aroma Capital, busco un perfume que no vi en el catálogo: ');
+$('#pideBtn').href=waLink('Hola Arpeggio, busco un perfume que no vi en el catálogo: ');
 pintarConcho();
 </script>
 </body>
