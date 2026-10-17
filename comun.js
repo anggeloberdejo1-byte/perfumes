@@ -53,7 +53,7 @@ function card(c){
 }
 
 function montarPiezas(activo){
-  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Cómo pedir','index.html#como','como']];
+  const nav=[['Mujeres',cat({g:'M'}),'M'],['Hombres',cat({g:'H'}),'H'],['Árabes',cat({s:'arabes'}),'arabes'],['Nicho',cat({s:'nicho'}),'nicho'],['Diseñador',cat({s:'disenador'}),'disenador'],['Todo el catálogo',cat(),'todo'],['Frascos','frascos.html','frascos'],['Cómo pedir','index.html#como','como']];
   document.body.insertAdjacentHTML('afterbegin',`
 <header class="top">
   <div class="wrap">
@@ -90,7 +90,7 @@ function montarPiezas(activo){
     <div><a class="logo" href="index.html" style="margin-bottom:18px" aria-label="Arpeggio, inicio"><span><b>arpeggio</b><small>Perfumería</small></span></a>
       <p>Santo Domingo, República Dominicana</p>
       <a class="wa-btn" href="${waLink('Hola Arpeggio')}" target="_blank" rel="noopener">${WAICON} 829-232-4326</a></div>
-    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a></div>
+    <div><h4>Catálogo</h4><a href="${cat({g:'M'})}">Mujeres</a><a href="${cat({g:'H'})}">Hombres</a><a href="${cat({s:'arabes'})}">Árabes</a><a href="${cat({s:'nicho'})}">Nicho</a><a href="${cat({s:'disenador'})}">Diseñador</a><a href="frascos.html">Frascos</a></div>
     <div><h4>Ayuda</h4><a href="index.html#como">Cómo pedir</a><a href="#" data-open-cart>Mi carrito</a><a href="${waLink('Hola Arpeggio, busco un perfume que no vi en el catálogo: ')}" target="_blank" rel="noopener">¿No lo ves? Pídelo</a></div>
     <div><h4>Aviso</h4><p>${AVISO}</p><button class="instalar btn ghost" hidden>Guardar en mi celular</button></div>
   </div>
@@ -132,8 +132,10 @@ function montarPiezas(activo){
     const f=e.target.closest('a[href^="ficha.html"]');
     if(f){const lista=[...new Set($$('.card .montar').map(b=>b.dataset.code))];try{sessionStorage.setItem('ac_lista',JSON.stringify(lista));if(!location.pathname.endsWith('ficha.html'))sessionStorage.setItem('ac_volver',location.pathname.split('/').pop()+location.search)}catch(_){}}
     const m=e.target.closest('.montar');if(m){toggle(m.dataset.code);return}
+    const fr=e.target.closest('.elegir');if(fr){elegirFrasco(+fr.dataset.frasco,+fr.dataset.ml);return}
+    if(e.target.closest('[data-rm-frasco]')){elegirFrasco(null);return}
     const r=e.target.closest('[data-rm]');if(r){toggle(r.dataset.rm);return}
-    if(e.target.closest('#clear')){cart=[];guardar();pintarConcho();return}
+    if(e.target.closest('#clear')){cart=[];frasco=null;guardar();pintarConcho();return}
     if(e.target.closest('[data-open-cart]')||e.target.closest('#openCart')){e.preventDefault();abrir(true)}
   });
   $('#closeCart').onclick=$('#veil').onclick=()=>abrir(false);
@@ -145,7 +147,15 @@ function montarPiezas(activo){
 }
 
 let cart=[];try{cart=JSON.parse(localStorage.getItem('ac_concho')||'[]').filter(c=>BY[c])}catch(e){}
-const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart))}catch(e){}};
+// Frasco elegido para el pedido: {n, ml} (uno por pedido).
+let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')}catch(e){}
+const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
+const nomFrasco=f=>`Frasco N.º ${f.n} · ${f.ml} ml`;
+function elegirFrasco(n,ml){
+  if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}
+  else{frasco={n,ml};toast(`${nomFrasco(frasco)} es tu frasco`)}
+  guardar();pintarConcho();
+}
 const abrir=on=>{$('#drawer').classList.toggle('on',on);$('#veil').classList.toggle('on',on)};
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
 function toggle(c){
@@ -156,9 +166,12 @@ function toggle(c){
 function pintarConcho(){
   [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=cart.length});
   $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito'):(m.dataset.off||'Agregar')});
-  $('#dlist').innerHTML=cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
-    :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>';
-  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}\n¿Están disponibles y qué precio tienen?`;
+  $$('.elegir').forEach(b=>{const on=!!frasco&&frasco.n==b.dataset.frasco;b.classList.toggle('on',on);b.textContent=on?'✓ Tu frasco':'Elegir este frasco'});
+  $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
+    :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>')
+    +(frasco?`<div class="ci"><div class="th"><img src="img/frascos/${frasco.n}.webp" alt="${nomFrasco(frasco)}"></div><div><b>${nomFrasco(frasco)}</b><span>Tu frasco · <a href="frascos.html">Cambiar</a></span></div><button class="rm" data-rm-frasco>Quitar</button></div>`
+      :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
+  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\n¿Están disponibles y qué precio tienen?`;
   $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 
