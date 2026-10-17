@@ -25,7 +25,7 @@ const WAICON='<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"
 const REDES=[
   ['Facebook','#','<path fill="currentColor" d="M13.5 21v-7.5H16l.4-3h-2.9V8.7c0-.9.3-1.4 1.5-1.4h1.5V4.6a20 20 0 0 0-2.2-.1c-2.2 0-3.7 1.3-3.7 3.8v2.2H8.1v3h2.5V21z"/>'],
   ['Instagram','https://www.instagram.com/arpeggio.perfums/','<rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/>'],
-  ['TikTok','#','<path fill="currentColor" d="M16.6 5.8a4.3 4.3 0 0 1-1-2.8h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6l.8.1V9.7a5.8 5.8 0 1 0 5 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.4-1.6z"/>'],
+  ['TikTok','https://www.tiktok.com/@arpeggio.perfums','<path fill="currentColor" d="M16.6 5.8a4.3 4.3 0 0 1-1-2.8h-3.1v12.4a2.6 2.6 0 1 1-2.6-2.6l.8.1V9.7a5.8 5.8 0 1 0 5 5.7V9.1a7.3 7.3 0 0 0 4.3 1.4V7.4a4.3 4.3 0 0 1-3.4-1.6z"/>'],
   ['YouTube','#','<path fill="currentColor" d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.5 2.5 0 0 0-1.8 1.8C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8zM10 15V9l5.2 3z"/>'],
 ];
 const PAGOS=`<span class="pago" title="Mastercard"><svg viewBox="0 0 64 40" width="54" height="34" aria-label="Mastercard"><circle cx="25" cy="17" r="13" fill="#eb001b"/><circle cx="39" cy="17" r="13" fill="#f79e1b"/><path d="M32 6a13 13 0 0 1 0 22 13 13 0 0 1 0-22z" fill="#ff5f00"/><text x="32" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#231f20">mastercard</text></svg></span>
@@ -116,9 +116,14 @@ function montarPiezas(activo){
     const q=norm(e.target.value.trim()),box=$('#results');
     if(q.length<2){box.classList.remove('on');return}
     const hits=PERFUMES.filter(p=>norm(p[1]+' '+p[2]).includes(q)).slice(0,30);
-    box.innerHTML=hits.length?hits.map(p=>`<div class="res"><div class="th">${img(p[0])}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])} · ${p[3]=='H'?'Hombre':'Mujer'}</span></div><button class="montar" data-code="${p[0]}" style="padding:7px 10px;font-size:10px"></button></div>`).join('')
+    box.innerHTML=hits.length?hits.map(p=>`<div class="res"><a class="ir" href="${ficha(p[0])}" aria-label="Ver ficha de ${esc(p[1])}"><div class="th">${img(p[0])}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])} · ${p[3]=='H'?'Hombre':'Mujer'}</span></div></a><button class="montar" data-code="${p[0]}" style="padding:7px 10px;font-size:10px"></button></div>`).join('')
       :`<div class="empty">No lo encontramos. <a href="${waLink('Hola Arpeggio, ¿tienen '+e.target.value.trim()+'?')}" target="_blank" rel="noopener">Pídelo por WhatsApp</a></div>`;
     box.classList.add('on');pintarConcho();
+  });
+  // Enter abre la ficha del primer resultado
+  $('#q').addEventListener('keydown',e=>{
+    if(e.key!='Enter')return;
+    const a=$('#results .ir');if(a){e.preventDefault();location.href=a.getAttribute('href')}
   });
 
   // Carrito
