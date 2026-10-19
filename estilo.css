@@ -5,10 +5,10 @@
   --body:"Inter","Helvetica Neue",Arial,sans-serif;
   --marca:"Inter","Helvetica Neue",Arial,sans-serif;
   color-scheme:light;
-  /* Paleta Arpeggio: negro, cobalto y el amarillo del logo */
-  --ink:#121212; --bar:#1b1b1e; --accent:#2b56c8; --accent-soft:#8ea6ea; --amarillo:#f7ea48;
-  --tint:#f3f2ee; --tint2:#e9eefa; --on-ink:#f5f5f2; --on-ink-muted:#a7abb5;
-  --tag-h:#2b56c8; --tag-m:#5b4bb0;
+  /* Paleta Arpeggio (logo nuevo 19-oct): negro, azul #5B71F7 y el amarillo */
+  --ink:#121212; --bar:#1b1b1e; --accent:#5b71f7; --accent-soft:#a3b0fb; --amarillo:#f7ea48;
+  --tint:#f3f2ee; --tint2:#eceefe; --on-ink:#f5f5f2; --on-ink-muted:#a7abb5;
+  --tag-h:#5b71f7; --tag-m:#5b4bb0;
 }
 
 *{box-sizing:border-box}
@@ -23,7 +23,8 @@ a{color:inherit}
 .top>.wrap{display:flex;align-items:center;gap:18px;height:72px}
 .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--on-ink);flex:none}
 .mono{width:40px;height:40px;border-radius:50%;border:1px solid var(--accent);display:grid;place-items:center;font-family:var(--display);font-style:italic;font-size:20px;color:var(--accent)}
-.logo b{display:block;font-family:var(--marca);font-weight:900;font-size:30px;letter-spacing:-.035em;line-height:.9;text-transform:lowercase}
+.logo b{display:block;line-height:0}
+.logo .wm{display:block;height:27px;width:auto;fill:currentColor}
 .logo small{display:block;font-size:9.5px;font-weight:500;letter-spacing:.32em;color:var(--amarillo);text-transform:uppercase;margin-top:6px}
 .search{flex:1;max-width:420px;margin-left:auto;position:relative}
 .search input{width:100%;height:42px;border:0;border-radius:3px;padding:0 42px 0 14px;font:inherit;font-weight:400;font-size:14px;color:#121212;background:#fff}
@@ -139,7 +140,7 @@ footer a:hover{color:var(--accent-soft)}
 }
 @media (max-width:640px){
   .top>.wrap{flex-wrap:wrap;height:auto;padding-top:10px;padding-bottom:10px;gap:10px 14px}
-  .logo b{font-size:25px;letter-spacing:-.035em}
+  .logo .wm{height:23px}
   .top .logo small{display:none}
   .icon-btn{margin-left:auto}
   .icon-btn .t{display:none}
