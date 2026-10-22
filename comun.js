@@ -166,6 +166,8 @@ function cambiarTam(c,ml){ml==30?delete tam[c]:tam[c]=ml;guardar();pintarConcho(
 let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')}catch(e){}
 const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));localStorage.setItem('ac_tam',JSON.stringify(tam));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
 // En la página el frasco no lleva número; el número solo va en el mensaje de WhatsApp.
+// Foto de cada frasco; sube ?v= cuando cambies una foto para que el celular baje la nueva.
+const fotoFrasco=n=>`img/frascos/${n}.webp?v=2`;
 const nomFrasco=f=>`Frasco de ${f.ml} ml`;
 function elegirFrasco(n,ml){
   if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}
@@ -198,7 +200,7 @@ function pintarConcho(){
   $$('.elegir').forEach(b=>{const on=!!frasco&&frasco.n==b.dataset.frasco;b.classList.toggle('on',on);b.textContent=on?'✓ Tu frasco':'Elegir este frasco'});
   $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span><div class="linea"><div class="qty"><button data-menos="${c}" aria-label="Uno menos de ${esc(p[1])}">−</button><output>${uds(c)}</output><button data-mas="${c}" aria-label="Otro de ${esc(p[1])}">+</button></div><div class="tamano mini">${[30,10].map(ml=>`<button data-tam="${c}" data-ml="${ml}">${ml} ml</button>`).join('')}</div><em class="lp">${rd(subtotal(c))}</em></div></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
     :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>')
-    +(frasco?`<div class="ci"><div class="th"><img src="img/frascos/${frasco.n}.webp" alt="${nomFrasco(frasco)}"></div><div><b>${nomFrasco(frasco)}</b><span>Tu frasco · <a href="frascos.html">Cambiar</a></span></div><button class="rm" data-rm-frasco>Quitar</button></div>`
+    +(frasco?`<div class="ci"><div class="th"><img src="${fotoFrasco(frasco.n)}" alt="${nomFrasco(frasco)}"></div><div><b>${nomFrasco(frasco)}</b><span>Tu frasco · <a href="frascos.html">Cambiar</a></span></div><button class="rm" data-rm-frasco>Quitar</button></div>`
       :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
   $$('.tamano button').forEach(b=>{const on=mlDe(b.dataset.tam)==b.dataset.ml;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
   const total=cart.reduce((t,c)=>t+subtotal(c),0);

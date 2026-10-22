@@ -79,22 +79,24 @@
 </main>
 
 <script src="datos.js?v=34"></script>
-<script src="comun.js?v=45"></script>
+<script src="comun.js?v=46"></script>
 <script>
 const qs=new URLSearchParams(location.search);
-const st={g:['M','H'].includes(qs.get('g'))?qs.get('g'):'T',s:SECCIONES.some(x=>x.id==qs.get('s'))?qs.get('s'):'',f:qs.get('f')||''};
+const st={g:['M','H'].includes(qs.get('g'))?qs.get('g'):'T',s:SECCIONES.some(x=>x.id==qs.get('s'))?qs.get('s'):'',f:qs.get('f')||'',m:PERFUMES.some(p=>p[2]==qs.get('m'))?qs.get('m'):''};
 montarPiezas(st.g!='T'?st.g:st.s||'todo');
 
 function pintar(){
-  const q={};if(st.g!='T')q.g=st.g;if(st.s)q.s=st.s;if(st.f)q.f=st.f;
+  const q={};if(st.m)q.m=st.m;if(st.g!='T')q.g=st.g;if(st.s)q.s=st.s;if(st.f)q.f=st.f;
   history.replaceState(null,'',cat(q));
-  const genero=PERFUMES.filter(p=>st.g=='T'||p[3]==st.g);
+  // m = marca: viene de la franja "Inspirados en" del inicio.
+  const genero=PERFUMES.filter(p=>(st.g=='T'||p[3]==st.g)&&(!st.m||p[2]==st.m));
   const sec=st.s?SECCIONES.find(x=>x.id==st.s):null;
   const gNom={M:'Para Ella',H:'Para Él'}[st.g];
 
-  $('#titulo').textContent=gNom||(sec?sec.nombre:'Todo el catálogo');
-  $('#kick').textContent=gNom&&sec?'Catálogo · '+sec.nombre:'Catálogo';
-  $('#bajada').textContent=sec&&!gNom?sec.desc:gNom?`${genero.length} perfumes, ordenados por diseñador, árabes y nicho.`:`${PERFUMES.length} perfumes de hombre y de mujer.`;
+  $('#titulo').textContent=st.m||gNom||(sec?sec.nombre:'Todo el catálogo');
+  $('#kick').textContent=st.m?'Inspirados en':gNom&&sec?'Catálogo · '+sec.nombre:'Catálogo';
+  $('#bajada').innerHTML=st.m?`${genero.length} perfume${genero.length==1?'':'s'} inspirado${genero.length==1?'':'s'} en ${esc(st.m)}${gNom?' · '+gNom:''}. <a href="catalogo.html">Ver todo el catálogo</a>`
+    :esc(sec&&!gNom?sec.desc:gNom?`${genero.length} perfumes, ordenados por diseñador, árabes y nicho.`:`${PERFUMES.length} perfumes de hombre y de mujer.`);
   $('#crumb').textContent=$('#titulo').textContent;
   document.title=$('#titulo').textContent+' · Arpeggio';
   $$('#gen button').forEach(b=>b.classList.toggle('on',b.dataset.g==st.g));

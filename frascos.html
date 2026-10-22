@@ -74,7 +74,7 @@
 
 <script src="datos.js?v=34"></script>
 <script src="frascos.js?v=2"></script>
-<script src="comun.js?v=45"></script>
+<script src="comun.js?v=46"></script>
 <script>
 montarPiezas('frascos');
 const qs=new URLSearchParams(location.search);
@@ -86,7 +86,7 @@ function pintar(){
   $('#chips').innerHTML=[`<button class="chip ${!ml?'on':''}" data-ml="0">Todos</button>`,...tamanos.map(t=>`<button class="chip ${t==ml?'on':''}" data-ml="${t}">${t} ml</button>`)].join('');
   const lista=FRASCOS.filter(f=>!ml||f[1]==ml);
   $('#count').textContent=`${lista.length} frasco${lista.length==1?'':'s'}`;
-  $('#lista').innerHTML=lista.map(([n,m])=>`<article class="card"><div class="ph"><img src="img/frascos/${n}.webp" alt="Frasco de ${m} ml" loading="lazy"></div>
+  $('#lista').innerHTML=lista.map(([n,m])=>`<article class="card"><div class="ph"><img src="${fotoFrasco(n)}" alt="Frasco de ${m} ml" loading="lazy"></div>
     <div class="nm">Frasco</div><div class="ml">${m} ml</div>
     <button class="elegir" data-frasco="${n}" data-ml="${m}"></button></article>`).join('');
   pintarConcho();
