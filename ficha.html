@@ -15,7 +15,7 @@
 <title>Ficha · Arpeggio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&display=swap">
-<link rel="stylesheet" href="estilo.css?v=38">
+<link rel="stylesheet" href="estilo.css?v=40">
 <style>
 .crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 0}
 .crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
@@ -47,6 +47,9 @@
 .wordmark{font-family:var(--display);font-size:22px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin:0}
 .fhero h1{font-family:var(--display);font-weight:500;font-size:60px;line-height:1;margin:6px 0 12px;text-wrap:balance}
 .fhero .tags{justify-content:flex-start;margin:0 0 4px}
+.compra{margin:18px 0 0;display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap}
+.compra .pr{margin:0;font-family:var(--display);font-size:30px;line-height:1}
+.compra .tamano{flex-basis:100%;margin-top:6px}
 .desc{margin:16px 0 0;max-width:60ch;font-size:16px}
 
 .block{margin-top:44px}
@@ -107,7 +110,7 @@
 
 <script src="datos.js?v=34"></script>
 <script src="fichas.js?v=34"></script>
-<script src="comun.js?v=40"></script>
+<script src="comun.js?v=42"></script>
 <script>
 const c=new URLSearchParams(location.search).get('c');
 const p=BY[c];
@@ -138,6 +141,8 @@ let html=`<div class="fhero">
     <h1>${esc(p[1])}</h1>
     <div class="tags"><span class="tag ${genero=='H'?'h':'m'}">${genero=='H'?'Hombre':'Mujer'}</span><span class="tag f">${esc(p[4])}</span><span class="tag f">${sec.nombre}</span></div>
     <p class="label" style="margin:10px 0 0">Inspirado en ${esc(p[1])} · ${esc(p[2])}</p>
+    <div class="compra"><p class="pr" data-precio="${c}">${precioHTML(mlDe(c))}</p><span class="lanz">Precio de lanzamiento</span>
+      <div class="tamano">${[30,10].map(ml=>`<button data-tam="${c}" data-ml="${ml}">${ml} ml</button>`).join('')}</div></div>
     ${d&&d.desc?`<p class="desc">${esc(d.desc)}</p>`:''}
   </div>
 </div>`;

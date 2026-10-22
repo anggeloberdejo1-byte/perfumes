@@ -32,6 +32,11 @@ const REDES=[
 ];
 const PAGOS=`<span class="pago" title="Mastercard"><svg viewBox="0 0 64 40" width="54" height="34" aria-label="Mastercard"><circle cx="25" cy="17" r="13" fill="#eb001b"/><circle cx="39" cy="17" r="13" fill="#f79e1b"/><path d="M32 6a13 13 0 0 1 0 22 13 13 0 0 1 0-22z" fill="#ff5f00"/><text x="32" y="38" text-anchor="middle" font-family="Arial,sans-serif" font-size="7.5" fill="#231f20">mastercard</text></svg></span>
 <span class="pago" title="Visa"><svg viewBox="0 0 64 40" width="54" height="34" aria-label="Visa"><text x="32" y="27" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-style="italic" font-size="20" fill="#1a1f71">VISA</text></svg></span>`;
+// Precio por tamaño en ml: [precio de lanzamiento, precio regular].
+// Cuando termine el lanzamiento, pon el regular en los dos y desaparece el tachado.
+const PRECIOS={30:[800,1000],10:[400,500]};
+const rd=n=>'RD$'+n.toLocaleString('en-US');
+const precioHTML=ml=>{const [p,r]=PRECIOS[ml];return `<span class="precio">${rd(p)}</span>${r>p?` <s class="regular">${rd(r)}</s>`:''}`};
 const AVISO='Perfume inspirado. No es un producto original ni tenemos relación con la marca mencionada.';
 
 const ficha=c=>'ficha.html?c='+encodeURIComponent(c);
@@ -49,7 +54,7 @@ function card(c){
   const p=BY[c];if(!p)return'';
   const sec=SECCIONES.find(s=>s.id==p[6]).nombre;
   return `<article class="card"><a class="ph" href="${ficha(c)}" aria-label="Ver ficha de ${esc(p[1])}">${img(c)||'<span class="nofoto">Foto muy pronto</span>'}</a>
-    <a class="nm" href="${ficha(c)}">${esc(p[1])}</a><div class="mk">${esc(p[2])}</div>
+    <a class="nm" href="${ficha(c)}">${esc(p[1])}</a><div class="mk">${esc(p[2])} <span class="nw">· 30 ml</span></div>
     <div class="tags"><span class="tag ${p[3]=='H'?'h':'m'}">${p[3]=='H'?'Hombre':'Mujer'}</span><span class="tag f">${esc(p[4])}</span>${p[6]!='disenador'?`<span class="tag f">${sec}</span>`:''}</div>
     <button class="montar" data-code="${c}"></button></article>`;
 }
@@ -105,7 +110,7 @@ function montarPiezas(activo){
 <button class="fab" id="fab" data-open-cart aria-label="Abrir tu carrito"><svg viewBox="50 -2 250 214" width="36" height="31" aria-hidden="true">${CARRO}</svg><span class="fbadge" id="fbadge" hidden>0</span></button>
 <div class="veil" id="veil"></div>
 <aside class="drawer" id="drawer" aria-label="Tu carrito">
-  <div class="dh"><h3>Tu carrito</h3><button class="x" id="closeCart" aria-label="Cerrar">✕</button></div>
+  <div class="dh"><h3>Tu carrito <small id="dcount"></small></h3><button class="x" id="closeCart" aria-label="Cerrar">✕</button></div>
   <p class="dnote">La fragancia que quieras, agrégala a tu carrito.</p>
   <div class="dlist" id="dlist"></div><div class="dfoot" id="dfoot"></div>
 </aside>
@@ -136,9 +141,10 @@ function montarPiezas(activo){
     const m=e.target.closest('.montar');if(m){toggle(m.dataset.code);return}
     const fr=e.target.closest('.elegir');if(fr){elegirFrasco(+fr.dataset.frasco,+fr.dataset.ml);return}
     if(e.target.closest('[data-rm-frasco]')){elegirFrasco(null);return}
+    const t=e.target.closest('[data-tam]');if(t){cambiarTam(t.dataset.tam,+t.dataset.ml);return}
     const q=e.target.closest('[data-mas],[data-menos]');if(q){q.dataset.mas?cambiarCant(q.dataset.mas,1):cambiarCant(q.dataset.menos,-1);return}
     const r=e.target.closest('[data-rm]');if(r){toggle(r.dataset.rm);return}
-    if(e.target.closest('#clear')){cart=[];cant={};frasco=null;guardar();pintarConcho();return}
+    if(e.target.closest('#clear')){cart=[];cant={};tam={};frasco=null;guardar();pintarConcho();return}
     if(e.target.closest('[data-open-cart]')||e.target.closest('#openCart')){e.preventDefault();abrir(true)}
   });
   $('#closeCart').onclick=$('#veil').onclick=()=>abrir(false);
@@ -154,8 +160,13 @@ let cart=[];try{cart=JSON.parse(localStorage.getItem('ac_concho')||'[]').filter(
 // Cuántas unidades de cada perfume: {código: n} (si no está, es 1).
 let cant={};try{cant=JSON.parse(localStorage.getItem('ac_cant')||'{}')}catch(e){}
 const uds=c=>cant[c]||1;
+// Tamaño de cada perfume: {código: 10} (si no está, es 30 ml).
+let tam={};try{tam=JSON.parse(localStorage.getItem('ac_tam')||'{}')}catch(e){}
+const mlDe=c=>tam[c]||30;
+const subtotal=c=>PRECIOS[mlDe(c)][0]*uds(c);
+function cambiarTam(c,ml){ml==30?delete tam[c]:tam[c]=ml;guardar();pintarConcho()}
 let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')}catch(e){}
-const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
+const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));localStorage.setItem('ac_tam',JSON.stringify(tam));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
 const nomFrasco=f=>`Frasco N.º ${f.n} · ${f.ml} ml`;
 function elegirFrasco(n,ml){
   if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}
@@ -177,16 +188,21 @@ function cambiarCant(c,d){
   guardar();pintarConcho();
 }
 function pintarConcho(){
-  const total=cart.reduce((t,c)=>t+uds(c),0);
-  [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=total});
+  const unidades=cart.reduce((t,c)=>t+uds(c),0);
+  [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=unidades});
+  const llevas=`${unidades} perfume${unidades==1?'':'s'}`;
+  $('#dcount').textContent=cart.length?llevas:'';
   $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito')+(uds(m.dataset.code)>1?` ×${uds(m.dataset.code)}`:''):(m.dataset.off||'Agregar')});
+  $$('[data-precio]').forEach(el=>el.innerHTML=precioHTML(mlDe(el.dataset.precio)));
   $$('.elegir').forEach(b=>{const on=!!frasco&&frasco.n==b.dataset.frasco;b.classList.toggle('on',on);b.textContent=on?'✓ Tu frasco':'Elegir este frasco'});
-  $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span><div class="qty"><button data-menos="${c}" aria-label="Uno menos de ${esc(p[1])}">−</button><output>${uds(c)}</output><button data-mas="${c}" aria-label="Otro de ${esc(p[1])}">+</button></div></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
+  $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span><div class="linea"><div class="qty"><button data-menos="${c}" aria-label="Uno menos de ${esc(p[1])}">−</button><output>${uds(c)}</output><button data-mas="${c}" aria-label="Otro de ${esc(p[1])}">+</button></div><div class="tamano mini">${[30,10].map(ml=>`<button data-tam="${c}" data-ml="${ml}">${ml} ml</button>`).join('')}</div><em class="lp">${rd(subtotal(c))}</em></div></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
     :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>')
     +(frasco?`<div class="ci"><div class="th"><img src="img/frascos/${frasco.n}.webp" alt="${nomFrasco(frasco)}"></div><div><b>${nomFrasco(frasco)}</b><span>Tu frasco · <a href="frascos.html">Cambiar</a></span></div><button class="rm" data-rm-frasco>Quitar</button></div>`
       :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
-  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})${uds(c)>1?` ×${uds(c)}`:''}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\n¿Están disponibles y qué precio tienen?`;
-  $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
+  $$('.tamano button').forEach(b=>{const on=mlDe(b.dataset.tam)==b.dataset.ml;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
+  const total=cart.reduce((t,c)=>t+subtotal(c),0);
+  const msg=`Hola, quiero pedir estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]}) · ${mlDe(c)} ml${uds(c)>1?` ×${uds(c)}`:''} – ${rd(subtotal(c))}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\nTotal: ${rd(total)}\n¿Están disponibles?`;
+  $('#dfoot').innerHTML=cart.length?`<div class="total"><span>Total · ${llevas}</span><b>${rd(total)}</b></div><p class="imp">Incluye impuestos</p><a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 
 // Guardar la página en el celular y abrirla sin internet.
