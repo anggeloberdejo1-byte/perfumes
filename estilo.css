@@ -124,6 +124,10 @@ footer a:hover{color:var(--accent-soft)}
 .ci{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .ci .th{width:44px;height:52px;display:grid;place-items:center;flex:none}.ci .th img{max-height:52px;max-width:44px}
 .ci div{flex:1}.ci b{display:block;font-family:var(--display);font-size:19px;font-weight:500;line-height:1.1}.ci span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+.qty{display:flex;width:max-content;align-items:center;border:1px solid var(--line);margin-top:7px}
+.qty button{all:unset;cursor:pointer;width:30px;height:28px;text-align:center;font-size:17px;line-height:28px;color:var(--ink)}
+.qty button:hover{background:var(--ink);color:var(--on-ink)}
+.qty output{min-width:26px;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
 .rm{all:unset;cursor:pointer;font-size:12px;color:var(--muted);text-decoration:underline}
 .dfoot{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:10px}
 .dfoot .wa-btn{justify-content:center}

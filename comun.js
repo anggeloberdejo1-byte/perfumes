@@ -136,8 +136,9 @@ function montarPiezas(activo){
     const m=e.target.closest('.montar');if(m){toggle(m.dataset.code);return}
     const fr=e.target.closest('.elegir');if(fr){elegirFrasco(+fr.dataset.frasco,+fr.dataset.ml);return}
     if(e.target.closest('[data-rm-frasco]')){elegirFrasco(null);return}
+    const q=e.target.closest('[data-mas],[data-menos]');if(q){q.dataset.mas?cambiarCant(q.dataset.mas,1):cambiarCant(q.dataset.menos,-1);return}
     const r=e.target.closest('[data-rm]');if(r){toggle(r.dataset.rm);return}
-    if(e.target.closest('#clear')){cart=[];frasco=null;guardar();pintarConcho();return}
+    if(e.target.closest('#clear')){cart=[];cant={};frasco=null;guardar();pintarConcho();return}
     if(e.target.closest('[data-open-cart]')||e.target.closest('#openCart')){e.preventDefault();abrir(true)}
   });
   $('#closeCart').onclick=$('#veil').onclick=()=>abrir(false);
@@ -150,8 +151,11 @@ function montarPiezas(activo){
 
 let cart=[];try{cart=JSON.parse(localStorage.getItem('ac_concho')||'[]').filter(c=>BY[c])}catch(e){}
 // Frasco elegido para el pedido: {n, ml} (uno por pedido).
+// Cuántas unidades de cada perfume: {código: n} (si no está, es 1).
+let cant={};try{cant=JSON.parse(localStorage.getItem('ac_cant')||'{}')}catch(e){}
+const uds=c=>cant[c]||1;
 let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')}catch(e){}
-const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
+const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
 const nomFrasco=f=>`Frasco N.º ${f.n} · ${f.ml} ml`;
 function elegirFrasco(n,ml){
   if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}
@@ -161,19 +165,27 @@ function elegirFrasco(n,ml){
 const abrir=on=>{$('#drawer').classList.toggle('on',on);$('#veil').classList.toggle('on',on)};
 function toast(t){const el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1800)}
 function toggle(c){
-  if(cart.includes(c)){cart=cart.filter(x=>x!=c);toast('Lo quitaste del carrito')}
+  if(cart.includes(c)){cart=cart.filter(x=>x!=c);delete cant[c];toast('Lo quitaste del carrito')}
   else{cart.push(c);toast(`${BY[c][1]} se agregó a tu carrito`)}
   guardar();pintarConcho();
 }
+function cambiarCant(c,d){
+  const n=uds(c)+d;
+  if(n<1){toggle(c);return}
+  n==1?delete cant[c]:cant[c]=n;
+  toast(`${BY[c][1]}: ${n} en tu carrito`);
+  guardar();pintarConcho();
+}
 function pintarConcho(){
-  [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=cart.length});
-  $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito'):(m.dataset.off||'Agregar')});
+  const total=cart.reduce((t,c)=>t+uds(c),0);
+  [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=total});
+  $$('.montar').forEach(m=>{const on=cart.includes(m.dataset.code);m.classList.toggle('on',on);m.textContent=on?(m.dataset.on||'✓ En tu carrito')+(uds(m.dataset.code)>1?` ×${uds(m.dataset.code)}`:''):(m.dataset.off||'Agregar')});
   $$('.elegir').forEach(b=>{const on=!!frasco&&frasco.n==b.dataset.frasco;b.classList.toggle('on',on);b.textContent=on?'✓ Tu frasco':'Elegir este frasco'});
-  $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
+  $('#dlist').innerHTML=(cart.length?cart.map(c=>{const p=BY[c];return `<div class="ci"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span>${esc(p[2])}</span><div class="qty"><button data-menos="${c}" aria-label="Uno menos de ${esc(p[1])}">−</button><output>${uds(c)}</output><button data-mas="${c}" aria-label="Otro de ${esc(p[1])}">+</button></div></div><button class="rm" data-rm="${c}">Quitar</button></div>`}).join('')
     :'<p class="dnote">Tu carrito está vacío. Toca <b>Agregar</b> en los perfumes que te gusten.</p>')
     +(frasco?`<div class="ci"><div class="th"><img src="img/frascos/${frasco.n}.webp" alt="${nomFrasco(frasco)}"></div><div><b>${nomFrasco(frasco)}</b><span>Tu frasco · <a href="frascos.html">Cambiar</a></span></div><button class="rm" data-rm-frasco>Quitar</button></div>`
       :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
-  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\n¿Están disponibles y qué precio tienen?`;
+  const msg=`Hola, quiero consultar por estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]})${uds(c)>1?` ×${uds(c)}`:''}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\n¿Están disponibles y qué precio tienen?`;
   $('#dfoot').innerHTML=cart.length?`<a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 
