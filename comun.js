@@ -165,7 +165,8 @@ const subtotal=c=>PRECIOS[mlDe(c)][0]*uds(c);
 function cambiarTam(c,ml){ml==30?delete tam[c]:tam[c]=ml;guardar();pintarConcho()}
 let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')}catch(e){}
 const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));localStorage.setItem('ac_tam',JSON.stringify(tam));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
-const nomFrasco=f=>`Frasco N.º ${f.n} · ${f.ml} ml`;
+// En la página el frasco no lleva número; el número solo va en el mensaje de WhatsApp.
+const nomFrasco=f=>`Frasco de ${f.ml} ml`;
 function elegirFrasco(n,ml){
   if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}
   else{frasco={n,ml};toast(`${nomFrasco(frasco)} es tu frasco`)}
@@ -201,7 +202,7 @@ function pintarConcho(){
       :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
   $$('.tamano button').forEach(b=>{const on=mlDe(b.dataset.tam)==b.dataset.ml;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
   const total=cart.reduce((t,c)=>t+subtotal(c),0);
-  const msg=`Hola, quiero pedir estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]}) · ${mlDe(c)} ml${uds(c)>1?` ×${uds(c)}`:''} – ${rd(subtotal(c))}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\nTotal: ${rd(total)}\n¿Están disponibles?\n\nVer el pedido: ${linkPedido()}`;
+  const msg=`Hola, quiero pedir estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]}) · ${mlDe(c)} ml${uds(c)>1?` ×${uds(c)}`:''} – ${rd(subtotal(c))}`).join('\n')}${frasco?`\nFrasco: ${frasco.n} (${frasco.ml} ml)`:''}\nTotal: ${rd(total)}\n¿Están disponibles?\n\nVer el pedido: ${linkPedido()}`;
   $('#dfoot').innerHTML=cart.length?`<div class="total"><span>Total · ${llevas}</span><b>${rd(total)}</b></div><p class="imp">Incluye impuestos</p><a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 
