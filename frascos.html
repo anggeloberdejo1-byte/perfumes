@@ -31,7 +31,9 @@
 .count{font-size:13px;color:var(--muted);margin:10px 0 0}
 
 .grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:18px}
-.grid .card{padding:22px 16px 18px}
+/* Cada frasco con su propio borde, así el espacio que sobra en la fila queda en blanco */
+.grid{background:none;border:0;padding:1px}
+.grid .card{padding:22px 16px 18px;box-shadow:0 0 0 1px var(--line)}
 .empty{padding:50px 20px;text-align:center;color:var(--muted)}
 
 @media (max-width:1000px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
