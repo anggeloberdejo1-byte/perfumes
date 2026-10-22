@@ -185,6 +185,8 @@ function cambiarCant(c,d){
   toast(`${BY[c][1]}: ${n} en tu carrito`);
   guardar();pintarConcho();
 }
+// Enlace a pedido.html con el carrito, para ver los perfumes en la página.
+const linkPedido=()=>new URL('pedido.html?p='+cart.map(c=>`${c}.${mlDe(c)}.${uds(c)}`).join('_')+(frasco?'&f='+frasco.n:''),location.href).href;
 function pintarConcho(){
   const unidades=cart.reduce((t,c)=>t+uds(c),0);
   [$('#badge'),$('#fbadge')].forEach(b=>{b.hidden=!cart.length;b.textContent=unidades});
@@ -199,7 +201,7 @@ function pintarConcho(){
       :cart.length?'<p class="dnote">¿Quieres escoger el frasco? <a href="frascos.html">Mira los frascos</a></p>':'');
   $$('.tamano button').forEach(b=>{const on=mlDe(b.dataset.tam)==b.dataset.ml;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});
   const total=cart.reduce((t,c)=>t+subtotal(c),0);
-  const msg=`Hola, quiero pedir estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]}) · ${mlDe(c)} ml${uds(c)>1?` ×${uds(c)}`:''} – ${rd(subtotal(c))}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\nTotal: ${rd(total)}\n¿Están disponibles?`;
+  const msg=`Hola, quiero pedir estos perfumes de Arpeggio:\n${cart.map((c,k)=>`${k+1}. ${c} – ${BY[c][1]} (${BY[c][2]}) · ${mlDe(c)} ml${uds(c)>1?` ×${uds(c)}`:''} – ${rd(subtotal(c))}`).join('\n')}${frasco?`\nEn el frasco: N.º ${frasco.n} (${frasco.ml} ml)`:''}\nTotal: ${rd(total)}\n¿Están disponibles?\n\nVer el pedido: ${linkPedido()}`;
   $('#dfoot').innerHTML=cart.length?`<div class="total"><span>Total · ${llevas}</span><b>${rd(total)}</b></div><p class="imp">Incluye impuestos</p><a class="wa-btn" href="${waLink(msg)}" target="_blank" rel="noopener">${WAICON} Enviar por WhatsApp</a><button class="rm" id="clear" style="text-align:center">Vaciar carrito</button>`:'';
 }
 

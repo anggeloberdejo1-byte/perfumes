@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#121212">
+<meta name="robots" content="noindex">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="iconos/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<title>Pedido · Arpeggio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;900&display=swap">
+<link rel="stylesheet" href="estilo.css?v=40">
+<style>
+.crumbs{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:18px 0 12px}
+.crumbs a{text-decoration:none}.crumbs a:hover{color:var(--ink)}
+.head{background:var(--tint);border:1px solid var(--line);padding:34px 36px}
+.head h1{font-family:var(--display);font-weight:500;font-size:60px;line-height:1;margin:0}
+.head p{margin:8px 0 0;color:var(--muted)}
+.ped{max-width:760px;margin:22px 0 60px}
+.it{display:grid;grid-template-columns:90px minmax(0,1fr) auto;gap:18px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line);text-decoration:none;color:inherit}
+.it .th{height:110px;display:grid;place-items:center}.it .th img{max-height:110px;max-width:90px}
+.it b{display:block;font-family:var(--display);font-size:26px;font-weight:500;line-height:1.1}
+.it .mk{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.it .det{font-size:13px;color:var(--muted);margin-top:6px}
+.it .lp{font-size:16px;font-variant-numeric:tabular-nums}
+a.it:hover b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.ped .total{margin-top:18px}
+.empty{padding:50px 20px;text-align:center;color:var(--muted)}
+@media (max-width:700px){
+  .head{padding:24px 18px}.head h1{font-size:42px}
+  .it{grid-template-columns:64px minmax(0,1fr) auto;gap:12px}
+  .it .th{height:80px}.it .th img{max-height:80px;max-width:64px}
+  .it b{font-size:21px}
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="crumbs"><a href="index.html">Inicio</a> / Pedido</div>
+  <section class="head">
+    <p class="kick">Pedido por WhatsApp</p>
+    <h1>Pedido</h1>
+    <p id="resumen"></p>
+  </section>
+  <div class="ped" id="ped"></div>
+</main>
+
+<script src="datos.js?v=34"></script>
+<script src="frascos.js?v=2"></script>
+<script src="comun.js?v=44"></script>
+<script>
+montarPiezas('');
+// El enlace del mensaje de WhatsApp: ?p=código.ml.cantidad_código.ml.cantidad&f=frasco
+const qs=new URLSearchParams(location.search);
+const items=(qs.get('p')||'').split('_').map(x=>x.split('.')).filter(([c,ml])=>BY[c]&&PRECIOS[ml]).map(([c,ml,n])=>({c,ml:+ml,n:Math.max(1,+n||1)}));
+const fr=FRASCOS.find(f=>f[0]==qs.get('f'));
+const total=items.reduce((t,x)=>t+PRECIOS[x.ml][0]*x.n,0),unidades=items.reduce((t,x)=>t+x.n,0);
+$('#resumen').textContent=items.length?`${unidades} perfume${unidades==1?'':'s'} · ${rd(total)}`:'';
+$('#ped').innerHTML=items.length
+  ?items.map(({c,ml,n})=>{const p=BY[c];return `<a class="it" href="${ficha(c)}"><div class="th">${img(c)}</div><div><b>${esc(p[1])}</b><span class="mk">${esc(p[2])}</span><div class="det">${ml} ml · ${n} ${n==1?'unidad':'unidades'}</div></div><span class="lp">${rd(PRECIOS[ml][0]*n)}</span></a>`}).join('')
+    +(fr?`<a class="it" href="frascos.html"><div class="th"><img src="img/frascos/${fr[0]}.webp" alt="Frasco N.º ${fr[0]}"></div><div><b>Frasco N.º ${fr[0]}</b><span class="mk">${fr[1]} ml</span><div class="det">Frasco elegido</div></div><span></span></a>`:'')
+    +`<div class="total"><span>Total · ${unidades} perfume${unidades==1?'':'s'}</span><b>${rd(total)}</b></div><p class="imp">Incluye impuestos</p>`
+  :'<p class="empty">Este enlace no tiene perfumes. <a href="catalogo.html">Ver el catálogo</a></p>';
+</script>
+</body>
+</html>
