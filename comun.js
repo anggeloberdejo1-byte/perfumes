@@ -167,7 +167,7 @@ let frasco=null;try{frasco=JSON.parse(localStorage.getItem('ac_frasco')||'null')
 const guardar=()=>{try{localStorage.setItem('ac_concho',JSON.stringify(cart));localStorage.setItem('ac_cant',JSON.stringify(cant));localStorage.setItem('ac_tam',JSON.stringify(tam));frasco?localStorage.setItem('ac_frasco',JSON.stringify(frasco)):localStorage.removeItem('ac_frasco')}catch(e){}};
 // En la página el frasco no lleva número; el número solo va en el mensaje de WhatsApp.
 // Foto de cada frasco; sube ?v= cuando cambies una foto para que el celular baje la nueva.
-const fotoFrasco=n=>`img/frascos/${n}.webp?v=2`;
+const fotoFrasco=n=>`img/frascos/${n}.webp?v=3`;
 const nomFrasco=f=>`Frasco de ${f.ml} ml`;
 function elegirFrasco(n,ml){
   if(n==null||(frasco&&frasco.n==n)){frasco=null;toast('Quitaste el frasco')}

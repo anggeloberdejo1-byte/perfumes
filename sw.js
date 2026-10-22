@@ -1,6 +1,6 @@
 // Arpeggio — service worker: guarda la página y las fotos para abrirla sin internet.
 // preparar.py cambia VERSION cada vez que cambian los archivos, así el celular baja lo nuevo.
-const VERSION = '30c46417e4';
+const VERSION = '8ebbcccefe';
 const BASE = 'aroma-base-' + VERSION;
 const FOTOS = 'aroma-fotos-' + VERSION;
 const FUENTES = 'aroma-fuentes';
@@ -9,7 +9,7 @@ const PAGINAS = [
   './', 'index.html', 'catalogo.html', 'ficha.html', 'frascos.html', 'frascos.js', 'pedido.html',
   'estilo.css', 'comun.js', 'datos.js', 'fichas.js',
   'manifest.webmanifest', 'iconos/icono-192.png', 'iconos/icono-512.png',
-  'iconos/apple-touch-icon.png', 'iconos/favicon-32.png', 'iconos/dibujo-estante.jpg', 'iconos/logo-arpeggio.jpg', 'iconos/textura-azul.jpg', 'iconos/frasco-arpeggio-1.jpg', 'iconos/frasco-arpeggio-2.jpg', 'iconos/icono-maskable-512.png',
+  'iconos/apple-touch-icon.png', 'iconos/favicon-32.png', 'iconos/dibujo-estante.jpg', 'iconos/logo-arpeggio.jpg', 'iconos/textura-azul.jpg', 'iconos/frascos-arpeggio.jpg', 'iconos/icono-maskable-512.png',
 ];
 
 self.addEventListener('install', e => {

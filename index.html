@@ -38,9 +38,9 @@
 .stage{display:flex;align-items:flex-end;justify-content:center;gap:3%;padding:34px 28px 40px;background:#fff}
 .stage img{height:340px;width:auto;max-width:23%;object-fit:contain;object-position:bottom}
 .stage img:nth-child(odd){height:290px}
-/* Diapositiva del frasco Arpeggio: las dos fotos lado a lado */
-.stage.fotos{align-items:center;gap:22px;padding:30px 28px}
-.stage.fotos img,.stage.fotos img:nth-child(odd){height:380px;max-width:none;border-radius:2px;box-shadow:0 18px 40px rgba(0,0,0,.18)}
+/* Diapositiva del frasco Arpeggio: foto en fondo blanco, se funde con la diapositiva */
+.stage.fotos{align-items:center;padding:20px 28px}
+.stage.fotos img{height:410px;max-width:none;mix-blend-mode:multiply}
 .stage.big{align-items:center}
 .stage .carro-big{width:min(100%,320px);color:#111}
 .dots{position:absolute;right:22px;bottom:16px;display:flex;gap:10px;z-index:3}
@@ -109,7 +109,7 @@
   .slide h2{font-size:40px}
   .stage{padding:22px 12px 40px}
   .stage img{height:210px}.stage img:nth-child(odd){height:180px}
-  .stage.fotos{gap:12px;padding:22px 12px 44px}.stage.fotos img,.stage.fotos img:nth-child(odd){height:min(250px,58vw)}
+  .stage.fotos{padding:18px 12px 44px}.stage.fotos img{height:320px}
   .slide.marca{background:#fff}
   .slide.marca .txt{background:var(--tint)}
   .stage.poster{padding:10px 0 30px}
@@ -149,7 +149,7 @@
           <p class="sub">El perfume que escojas, en frasco de 30 ml con la etiqueta de Arpeggio.</p>
           <a class="btn" href="frascos.html">Ver frascos</a>
         </div>
-        <div class="stage fotos"><img src="iconos/frasco-arpeggio-1.jpg" alt="Frasco de perfume Arpeggio con etiqueta" width="387" height="900"><img src="iconos/frasco-arpeggio-2.jpg" alt="Frasco Arpeggio de 30 ml, inspirado en" width="506" height="900"></div>
+        <div class="stage fotos"><img src="iconos/frascos-arpeggio.jpg" alt="Dos frascos de perfume Arpeggio de 30 ml con su etiqueta" width="583" height="900"></div>
       </div>
       <div class="slide">
         <div class="txt">
@@ -233,7 +233,7 @@
 </main>
 
 <script src="datos.js?v=34"></script>
-<script src="comun.js?v=46"></script>
+<script src="comun.js?v=47"></script>
 <script>
 montarPiezas('');
 $$('svg.carro').forEach(s=>s.innerHTML=CARRO);
