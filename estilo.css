@@ -123,6 +123,7 @@ footer a:hover{color:var(--accent-soft)}
 .dlist{flex:1;overflow:auto}
 .ci{display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
 .ci .th{width:44px;height:52px;display:grid;place-items:center;flex:none}.ci .th img{max-height:52px;max-width:44px}
+.ci .ir{text-decoration:none;color:inherit}.ci .ir:hover b{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
 .ci div{flex:1}.ci b{display:block;font-family:var(--display);font-size:19px;font-weight:500;line-height:1.1}.ci span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
 .qty{display:flex;width:max-content;align-items:center;border:1px solid var(--line);margin-top:7px}
 .qty button{all:unset;cursor:pointer;width:30px;height:28px;text-align:center;font-size:17px;line-height:28px;color:var(--ink)}
